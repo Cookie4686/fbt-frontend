@@ -5,11 +5,12 @@ export type User = Readonly<{
 	username: string;
 	email: string;
 	emailVerified: boolean;
+	passwordEnabled: boolean;
 }>;
 
 export type Session = Readonly<{
 	id: string;
-	userId: string;
+	userID: string;
 	expiresAt: string;
 	twoFactorVerified: boolean;
 }>;
@@ -35,7 +36,7 @@ const email = z.email();
 
 export const loginSchema = z.object({
 	username,
-	password
+	password,
 });
 
 export const registerSchema = z
@@ -43,11 +44,11 @@ export const registerSchema = z
 		username,
 		email,
 		password,
-		confirmedPassword: z.string()
+		confirmedPassword: z.string(),
 	})
 	.refine(({ password, confirmedPassword }) => password === confirmedPassword, {
 		error: "Password and Confirm Password does not match",
-		path: ["confirmedPassword"]
+		path: ["confirmedPassword"],
 	});
 
 export const oauthSchema = z
@@ -57,9 +58,8 @@ export const oauthSchema = z
 		password,
 		confirmedPassword: z.string(),
 		idToken: z.string(),
-		registrationId: z.string()
 	})
 	.refine(({ password, confirmedPassword }) => password === confirmedPassword, {
 		error: "Password and Confirm Password does not match",
-		path: ["confirmedPassword"]
+		path: ["confirmedPassword"],
 	});

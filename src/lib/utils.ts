@@ -1,8 +1,15 @@
-import { clsx, type ClassValue } from "clsx";
+import type { RequestEvent } from "@sveltejs/kit";
+
+import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
+}
+
+export async function getFormData(event: RequestEvent) {
+	const formData = await event.request.formData();
+	return Object.fromEntries(formData.entries());
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

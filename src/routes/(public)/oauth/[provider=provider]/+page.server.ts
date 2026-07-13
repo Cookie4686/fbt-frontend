@@ -1,32 +1,34 @@
-import { fail, isRedirect, redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
+import Route from "$lib/route";
 import { oauthSchema } from "$lib/schema/auth";
-import { handleOAuthCallback, login, register } from "$lib/server/auth/oauth";
-import { setSessionToken } from "$lib/server/auth/session";
+import { handleOAuthCallback, link, login, register } from "$lib/server/auth/oauth";
 import { message, superValidate } from "sveltekit-superforms";
 import { zod4 } from "sveltekit-superforms/adapters";
 
 import type { Actions, PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async (event) => {
-	if (event.locals.user) return redirect(302, "/profile");
-
+	const { session, user } = await event.parent();
 	const { provider } = event.params;
 
 	const data = await handleOAuthCallback(event, provider);
-	if (!data) return redirect(302, "/login");
+	if (!data) return redirect(302, Route.P_LOGIN);
 
 	const { tokenId, username, email, emailVerified } = data;
 
-	const { session, registration_id, registration_needed } = await login(
-		provider,
-		tokenId,
-		emailVerified ? email : null
-	);
-
-	if (!registration_needed) {
-		setSessionToken(event, session.id);
-		return redirect(302, "/profile");
+	if (session && user) {
+		await link(event, { provider: provider, token: tokenId });
+		return redirect(302, Route.A_SETTINGS);
 	}
+
+	const registrationNeeded = await login(event, {
+		email: email,
+		provider,
+		token: tokenId,
+		emailVerified,
+	});
+
+	if (!registrationNeeded) return redirect(302, Route.A_PROFILE);
 
 	return {
 		form: await superValidate(
@@ -34,42 +36,35 @@ export const load: PageServerLoad = async (event) => {
 				username: username ?? "",
 				email: email ?? "",
 				idToken: tokenId,
-				registrationId: registration_id
 			},
 			zod4(oauthSchema)
-		)
+		),
 	};
 };
 
 export const actions: Actions = {
 	default: async (event) => {
+		if (event.locals.user) return redirect(302, Route.A_PROFILE);
+
 		const form = await superValidate(event, zod4(oauthSchema));
 		if (!form.valid) return fail(400, { form });
 
-		if (event.locals.user) return redirect(302, "/profile");
-
 		const { provider } = event.params;
-		const { username, email, password, idToken, registrationId } = form.data;
+		const { username, email, password, idToken } = form.data;
 
 		try {
-			const session = await register({
+			await register(event, {
 				provider,
 				username,
 				email,
 				password,
-				tokenID: idToken,
-				registrationID: registrationId,
-				passwordEnabled: true
+				tokenId: idToken,
+				passwordEnabled: true,
 			});
-			setSessionToken(event, session.id);
-			return redirect(302, "/profile");
-		} catch (error) {
-			if (isRedirect(error)) {
-				throw error;
-			}
-
-			console.error(error);
+		} catch {
 			return message(form, "An error has occurred", { status: 500 });
 		}
-	}
+
+		redirect(302, Route.A_PROFILE);
+	},
 };

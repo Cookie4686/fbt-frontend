@@ -1,35 +1,41 @@
-import type { Session, User } from "$lib/schema/auth";
+import { createClient } from "@connectrpc/connect";
+import { error, type RequestEvent } from "@sveltejs/kit";
+import {
+	CredentialService,
+	type CredentialServiceLoginRequest,
+	type CredentialServiceRegisterRequest,
+} from "$lib/proto/auth/v1/credential_pb";
 
-import { error } from "@sveltejs/kit";
-import { BACKEND_URL } from "$env/static/private";
+import { handleError } from "../error";
+import { transport } from "../transport";
+import { setSessionToken } from "./session";
 
-export async function register(user: {
-	username: User["username"];
-	email: User["email"];
-	password: string;
-}): Promise<Session> {
-	const response = await fetch(`${BACKEND_URL}/credentials/register`, {
-		method: "POST",
-		body: JSON.stringify({ ...user })
-	});
-	if (response.status != 200) {
-		error(response.status);
+const client = createClient(CredentialService, transport);
+
+export async function register(
+	event: RequestEvent,
+	req: RequestInput<CredentialServiceRegisterRequest>
+): Promise<void> {
+	try {
+		const response = await client.register(req);
+		if (!response.session) error(500);
+
+		setSessionToken(event, response.session.id);
+	} catch (error) {
+		handleError(error);
 	}
-
-	return (await response.json()) as unknown as Session;
 }
 
-export async function login(user: {
-	username: User["username"];
-	password: string;
-}): Promise<Session> {
-	const response = await fetch(`${BACKEND_URL}/credentials/login`, {
-		method: "POST",
-		body: JSON.stringify({ ...user })
-	});
-	if (response.status != 200) {
-		error(response.status);
-	}
+export async function login(
+	event: RequestEvent,
+	req: RequestInput<CredentialServiceLoginRequest>
+): Promise<void> {
+	try {
+		const response = await client.login(req);
+		if (!response.session) error(500);
 
-	return (await response.json()) as unknown as Session;
+		setSessionToken(event, response.session.id);
+	} catch (error) {
+		handleError(error);
+	}
 }

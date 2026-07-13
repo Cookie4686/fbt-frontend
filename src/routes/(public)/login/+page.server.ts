@@ -1,9 +1,9 @@
 import type { RequestEvent } from "@sveltejs/kit";
 
-import { fail, isRedirect, redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
+import Route from "$lib/route";
 import { loginSchema } from "$lib/schema/auth";
 import { login } from "$lib/server/auth/credential";
-import { setSessionToken } from "$lib/server/auth/session";
 import { message, superValidate } from "sveltekit-superforms";
 import { zod4 } from "sveltekit-superforms/adapters";
 
@@ -21,32 +21,11 @@ export const actions: Actions = {
 		if (!form.valid) return fail(400, { form });
 
 		try {
-			const session = await login(form.data);
-			setSessionToken(event, session.id);
-			return redirect(302, "/settings");
-		} catch (error) {
-			if (isRedirect(error)) {
-				throw error;
-			}
-
-			console.error(error);
+			await login(event, { username: form.data.username, password: form.data.password });
+		} catch {
 			return message(form, "An error has occurred", { status: 500 });
 		}
 
-		// const existingUser = (
-		// 	await db.select().from(table.user).where(eq(table.user.username, username))
-		// ).at(0);
-
-		// if (!existingUser) return setError(form, "username", "That user doesn't exist");
-
-		// if (!existingUser.passwordHash) {
-		// 	return message(form, "This user does not have credentials login enabled", {
-		// 		status: 400
-		// 	});
-		// }
-
-		// if (!(await verifyHashPassword(existingUser.passwordHash, password))) {
-		// 	return setError(form, "password", "Incorrect Password");
-		// }
-	}
+		redirect(302, Route.A_SETTINGS);
+	},
 };

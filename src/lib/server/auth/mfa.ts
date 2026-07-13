@@ -1,52 +1,64 @@
-import { error } from "@sveltejs/kit";
-import { BACKEND_URL } from "$env/static/private";
+import { createClient } from "@connectrpc/connect";
+import { error, type RequestEvent } from "@sveltejs/kit";
+import {
+	MFAService,
+	type MFAServiceStatusRequest,
+	type MFAServiceTOTPUpsertKeyRequest,
+	type MFAServiceTOTPValidateRequest,
+} from "$lib/proto/auth/v1/mfa_pb";
 
-export async function getUserMFA(sessionID: string) {
-	const response = await fetch(`${BACKEND_URL}/mfa/status`, {
-		method: "GET",
-		headers: {
-			Cookie: `session_id=${sessionID};`
-		}
-	});
-	if (response.status != 200) {
-		error(response.status);
+import { handleError } from "../error";
+import H from "../http-code";
+import { transport, withTokenHeader } from "../transport";
+import { setSessionToken } from "./session";
+
+const client = createClient(MFAService, transport);
+
+export async function getUserMFA(
+	event: RequestEvent,
+	req: RequestInput<MFAServiceStatusRequest>
+): Promise<{ totp: boolean }> {
+	try {
+		const { session } = event.locals;
+		if (!session) return error(H.C_401_UNAUTHORIZED);
+
+		const response = await client.status(req, withTokenHeader(session.id));
+		return { totp: response.totpEnabled };
+	} catch (error) {
+		handleError(error);
 	}
-	return (await response.json()) as {
-		totp: boolean;
-	};
 }
 
-export async function upsertTOTP(key: string, sessionID: string) {
-	const response = await fetch(`${BACKEND_URL}/mfa/totp`, {
-		method: "POST",
-		headers: {
-			Cookie: `session_id=${sessionID};`
-		},
-		body: JSON.stringify({ key })
-	});
-	if (response.status != 200) {
-		error(response.status);
+export async function upsertTOTP(
+	event: RequestEvent,
+	req: RequestInput<MFAServiceTOTPUpsertKeyRequest>
+): Promise<void> {
+	try {
+		const { session } = event.locals;
+		if (!session) return error(H.C_401_UNAUTHORIZED);
+
+		const { session: newSession } = await client.tOTPUpsertKey(req, withTokenHeader(session.id));
+		if (!newSession) error(500);
+
+		setSessionToken(event, newSession.id);
+	} catch (error) {
+		handleError(error);
 	}
 }
 
 export async function validateTOTP(
-	code: string,
-	sessionID: string
-): Promise<{ is_passed: boolean }> {
-	const response = await fetch(`${BACKEND_URL}/mfa/totp/validate`, {
-		method: "POST",
-		headers: {
-			Cookie: `session_id=${sessionID};`
-		},
-		body: JSON.stringify({
-			code
-		})
-	});
-	if (response.status != 200) {
-		error(response.status);
-	}
+	event: RequestEvent,
+	req: RequestInput<MFAServiceTOTPValidateRequest>
+): Promise<void> {
+	try {
+		const { session } = event.locals;
+		if (!session) return error(H.C_401_UNAUTHORIZED);
 
-	return (await response.json()) as {
-		is_passed: boolean;
-	};
+		const response = await client.tOTPValidate(req, withTokenHeader(session.id));
+		if (!response.session) error(H.C_500_INTERNAL_SERVER_ERROR);
+
+		setSessionToken(event, response.session.id);
+	} catch (error) {
+		handleError(error);
+	}
 }

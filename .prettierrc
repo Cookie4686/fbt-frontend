@@ -28,6 +28,6 @@
 	"singleQuote": false,
 	"tabWidth": 2,
 	"tailwindStylesheet": "./src/routes/layout.css",
-	"trailingComma": "none",
+	"trailingComma": "es5",
 	"useTabs": true
 }

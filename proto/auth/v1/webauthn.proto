@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package auth.v1;
+
+import "auth/v1/common.proto";
+import "buf/validate/validate.proto";
+
+service WebAuthnService {
+  rpc GetUserPasskey(WebAuthnServiceGetUserPasskeyRequest) returns (WebAuthnServiceGetUserPasskeyResponse) {}
+  rpc CreateUserPasskey(WebAuthnServiceCreateUserPasskeyRequest) returns (WebAuthnServiceCreateUserPasskeyResponse) {}
+  rpc UpdatePasskeyCounter(WebAuthnServiceUpdatePasskeyCounterRequest) returns (WebAuthnServiceUpdatePasskeyCounterResponse) {}
+}
+
+message WebAuthnServiceGetUserPasskeyRequest {
+  string rp_id = 1 [(buf.validate.field).required = true];
+  string credential_id = 2 [(buf.validate.field).required = true];
+}
+message WebAuthnServiceGetUserPasskeyResponse {
+  WebAuthnCredential credential = 1 [(buf.validate.field).required = true];
+}
+
+message WebAuthnServiceCreateUserPasskeyRequest {
+  WebAuthnCredential credential = 1 [(buf.validate.field).required = true];
+}
+message WebAuthnServiceCreateUserPasskeyResponse {
+  WebAuthnCredential credential = 1 [(buf.validate.field).required = true];
+}
+
+message WebAuthnServiceUpdatePasskeyCounterRequest {
+  string rp_id = 1 [(buf.validate.field).required = true];
+  string credential_id = 2 [(buf.validate.field).required = true];
+  int64 counter = 3;
+}
+message WebAuthnServiceUpdatePasskeyCounterResponse {
+  Session session = 1 [(buf.validate.field).required = true];
+}

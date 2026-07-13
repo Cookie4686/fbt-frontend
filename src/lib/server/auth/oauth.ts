@@ -1,21 +1,31 @@
-import type { Session, User } from "$lib/schema/auth";
-
-import { error, type RequestEvent } from "@sveltejs/kit";
-import { BACKEND_URL } from "$env/static/private";
+import { createClient } from "@connectrpc/connect";
+import { error, redirect, type RequestEvent } from "@sveltejs/kit";
+import {
+	OAuthService,
+	type OAuthServiceLinkRequest,
+	type OAuthServiceLoginRequest,
+	type OAuthServiceRegisterRequest,
+	type OAuthServiceStatusRequest,
+	type OAuthServiceUnlinkRequest,
+} from "$lib/proto/auth/v1/oauth_pb";
 import { decodeIdToken, generateCodeVerifier, generateState, OAuth2Tokens } from "arctic";
 
+import { handleError } from "../error";
+import H from "../http-code";
+import { transport, withTokenHeader } from "../transport";
 import { type Provider, providers } from "./provider";
+import { setSessionToken } from "./session";
 
 interface OAuthData {
 	tokenId: string;
 	username: string | null;
-	email: string | null;
+	email: string | undefined;
 	emailVerified: boolean;
 }
 
 const DAY_IN_MS = 1000 * 60 * 60 * 24;
 
-const registrationCookieName = "auth-session";
+const registrationCookieName = "oauth-registration-session";
 
 export function getRegistrationToken(event: RequestEvent) {
 	return event.cookies.get(registrationCookieName);
@@ -27,7 +37,7 @@ export function setRegistrationToken(event: RequestEvent, token: string) {
 		expires: new Date(Date.now() + DAY_IN_MS),
 		path: "/",
 		sameSite: "lax",
-		secure: import.meta.env.PROD
+		secure: import.meta.env.PROD,
 	});
 }
 
@@ -41,7 +51,7 @@ function setCookie(event: RequestEvent, key: string, value: string) {
 		maxAge: 60 * 10,
 		path: "/",
 		sameSite: "lax",
-		secure: import.meta.env.PROD
+		secure: import.meta.env.PROD,
 	});
 }
 
@@ -57,7 +67,7 @@ export function createOAuthRedirect(
 	setCookie(event, `${provider}_oauth_state`, state);
 	setCookie(event, `${provider}_code_verifier`, codeVerifier);
 
-	return new Response(null, { headers: { Location: url.toString() }, status: 302 });
+	return redirect(302, url.toString());
 }
 
 export async function handleOAuthCallback(
@@ -98,55 +108,96 @@ export async function handleOAuthCallback(
 	return {
 		tokenId: claims.sub,
 		username: claims?.name ?? null,
-		email: claims?.email ?? null,
-		emailVerified: Boolean(claims?.email_verified)
+		email: claims?.email ?? undefined,
+		emailVerified: Boolean(claims?.email_verified),
 	};
+}
+
+const client = createClient(OAuthService, transport);
+
+export async function getUserOAuth(
+	event: RequestEvent,
+	req: RequestInput<OAuthServiceStatusRequest>
+): Promise<string[]> {
+	try {
+		const { session } = event.locals;
+		if (!session) return error(H.C_401_UNAUTHORIZED);
+
+		const response = await client.status(req, withTokenHeader(session.id));
+
+		return response.providers;
+	} catch (error) {
+		handleError(error);
+	}
+}
+
+export async function register(
+	event: RequestEvent,
+	req: Omit<RequestInput<OAuthServiceRegisterRequest>, "registrationId">
+): Promise<void> {
+	try {
+		const registrationId = getRegistrationToken(event);
+		if (!registrationId) return error(H.C_400_BAD_REQUEST);
+
+		const response = await client.register({ registrationId, ...req });
+		if (!response.session) error(H.C_500_INTERNAL_SERVER_ERROR);
+
+		setSessionToken(event, response.session.id);
+	} catch (error) {
+		handleError(error);
+	}
 }
 
 export async function login(
-	provider: Provider,
-	token: string,
-	email: string | null
-): Promise<{ session: Session; registration_id: string; registration_needed: boolean }> {
-	const response = await fetch(`${BACKEND_URL}/oauth/login`, {
-		method: "POST",
-		body: JSON.stringify({ provider, token, email })
-	});
-	if (response.status != 200) {
-		error(response.status);
-	}
+	event: RequestEvent,
+	req: RequestInput<OAuthServiceLoginRequest>
+): Promise<boolean> {
+	try {
+		const response = await client.login(req);
 
-	return (await response.json()) as {
-		session: Session;
-		registration_id: string;
-		registration_needed: boolean;
-	};
+		if (response.session) {
+			setSessionToken(event, response.session.id);
+		}
+		if (response.registrationId) {
+			setRegistrationToken(event, response.registrationId);
+		}
+
+		return response.registrationNeeded;
+	} catch (error) {
+		handleError(error);
+	}
 }
 
-export async function register(data: {
-	provider: string;
-	registrationID: string;
-	tokenID: string;
-	username: User["username"];
-	email: User["email"];
-	password: string;
-	passwordEnabled: boolean;
-}): Promise<Session> {
-	const response = await fetch(`${BACKEND_URL}/oauth/register`, {
-		method: "POST",
-		body: JSON.stringify({
-			provider: data.provider,
-			registration_id: data.registrationID,
-			id_token: data.tokenID,
-			username: data.username,
-			email: data.email,
-			password: data.password,
-			password_enabled: data.passwordEnabled
-		})
-	});
-	if (response.status != 200) {
-		error(response.status);
-	}
+export async function link(
+	event: RequestEvent,
+	req: RequestInput<OAuthServiceLinkRequest>
+): Promise<void> {
+	try {
+		const { session } = event.locals;
+		if (!session) return error(H.C_401_UNAUTHORIZED);
 
-	return (await response.json()) as Session;
+		const response = await client.link(req, withTokenHeader(session.id));
+		if (!response.session) error(H.C_500_INTERNAL_SERVER_ERROR);
+
+		setSessionToken(event, response.session.id);
+	} catch (error) {
+		handleError(error);
+	}
+}
+
+export async function unlink(
+	event: RequestEvent,
+	req: RequestInput<OAuthServiceUnlinkRequest>
+): Promise<void> {
+	try {
+		const { session } = event.locals;
+		if (!session) return error(H.C_401_UNAUTHORIZED);
+
+		const response = await client.unlink(req, withTokenHeader(session.id));
+		if (!response.session) error(H.C_500_INTERNAL_SERVER_ERROR);
+
+		setSessionToken(event, response.session.id);
+	} catch (error) {
+		handleError(error);
+	}
 }

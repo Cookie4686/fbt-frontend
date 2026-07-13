@@ -12,7 +12,7 @@
 		superForm(data.form, {
 			validators: zod4Client(oauthSchema),
 			delayMs: 3000,
-			timeoutMs: 10000
+			timeoutMs: 10000,
 		}))();
 </script>
 
@@ -26,18 +26,13 @@
 		{
 			name: "confirmedPassword",
 			label: "Confirmed Password",
-			inputProps: { type: "password" }
-		},
-		{
-			name: "registrationId",
-			hidden: true,
-			inputProps: { hidden: true, readonly: true, autocomplete: "off" }
+			inputProps: { type: "password" },
 		},
 		{
 			name: "idToken",
 			hidden: true,
-			inputProps: { hidden: true, readonly: true, autocomplete: "off" }
-		}
+			inputProps: { hidden: true, readonly: true, autocomplete: "off" },
+		},
 	]}
 	buttons={[{ label: "Continue" }, { label: "Cancel", href: "/login", variant: "outline" }]}
 >

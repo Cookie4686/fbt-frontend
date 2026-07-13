@@ -1,13 +1,19 @@
-import type { RequestEvent } from "@sveltejs/kit";
-import type { Session, User } from "$lib/schema/auth";
+import { createClient } from "@connectrpc/connect";
+import { error, type RequestEvent } from "@sveltejs/kit";
+import { SessionService } from "$lib/proto/auth/v1/session_pb";
 
-import { BACKEND_URL } from "$env/static/private";
+import { handleError } from "../error";
+import H from "../http-code";
+import { transport, withTokenHeader } from "../transport";
+import { ProtoToSession, ProtoToUser } from "./common";
 
 const DAY_IN_MS = 1000 * 60 * 60 * 24;
 
 const sessionCookieName = "auth-session";
 
-function getSessionToken(event: RequestEvent) {
+const client = createClient(SessionService, transport);
+
+export function getSessionToken(event: RequestEvent) {
 	return event.cookies.get(sessionCookieName);
 }
 
@@ -16,12 +22,12 @@ export function setSessionToken(event: RequestEvent, token: string) {
 		httpOnly: true,
 		expires: new Date(Date.now() + DAY_IN_MS * 30),
 		path: "/",
-		sameSite: "strict",
-		secure: import.meta.env.PROD
+		sameSite: "lax",
+		secure: import.meta.env.PROD,
 	});
 }
 
-function deleteSessionToken(event: RequestEvent) {
+export function deleteSessionToken(event: RequestEvent) {
 	event.cookies.delete(sessionCookieName, { path: "/" });
 }
 
@@ -30,37 +36,28 @@ export async function invalidateSession(event: RequestEvent): Promise<boolean> {
 	const sessionToken = getSessionToken(event);
 
 	if (sessionToken) {
-		const response = await fetch(`${BACKEND_URL}/logout`, {
-			method: "POST",
-			headers: {
-				Cookie: `session_id=${sessionToken};`
-			}
-		});
-		if (response.status != 200) {
+		try {
+			await client.logout({}, withTokenHeader(sessionToken));
+			deleteSessionToken(event);
+		} catch (error) {
+			console.error(error);
 			return false;
 		}
-		deleteSessionToken(event);
 	}
 	return true;
 }
 
-export async function validateSession(
-	event: RequestEvent
-): Promise<{ session: Session | null; user: User | null }> {
-	const sessionToken = getSessionToken(event);
+export async function validateSession(event: RequestEvent): Promise<void> {
+	try {
+		const sessionToken = getSessionToken(event);
+		if (sessionToken) {
+			const { session, user } = await client.validate({}, withTokenHeader(sessionToken));
+			if (!session || !user) error(H.C_500_INTERNAL_SERVER_ERROR);
 
-	if (sessionToken) {
-		const response = await fetch(`${BACKEND_URL}/validate`, {
-			method: "POST",
-			headers: {
-				Cookie: `session_id=${sessionToken};`
-			}
-		});
-		if (response.status == 200) {
-			return (await response.json()) as unknown as { session: Session; user: User };
-		} else {
-			deleteSessionToken(event);
+			event.locals.session = ProtoToSession(session);
+			event.locals.user = ProtoToUser(user);
 		}
+	} catch (error) {
+		handleError(error);
 	}
-	return { session: null, user: null };
 }
