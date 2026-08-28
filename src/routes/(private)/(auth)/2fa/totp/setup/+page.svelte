@@ -12,7 +12,7 @@
 		superForm(data.form, {
 			validators: zod4Client(totpSetupFormSchema),
 			delayMs: 300,
-			timeoutMs: 10000
+			timeoutMs: 10000,
 		}))();
 </script>
 
@@ -23,14 +23,14 @@
 		{
 			name: "key",
 			hidden: true,
-			inputProps: { hidden: true, readonly: true, autocomplete: "off" }
+			inputProps: { hidden: true, readonly: true, autocomplete: "off" },
 		},
 		{
 			name: "secret",
 			hidden: true,
-			inputProps: { hidden: true, readonly: true, autocomplete: "off" }
+			inputProps: { hidden: true, readonly: true, autocomplete: "off" },
 		},
-		{ name: "code", label: "Verify the code from the app", inputProps: { autocomplete: "off" } }
+		{ name: "code", label: "Verify the code from the app", inputProps: { autocomplete: "off" } },
 	]}
 	buttons={[{ label: "Save" }]}
 >

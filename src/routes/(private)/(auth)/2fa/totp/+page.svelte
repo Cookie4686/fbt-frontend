@@ -12,17 +12,19 @@
 		superForm(data.form, {
 			validators: zod4Client(totpVerifyFormSchema),
 			delayMs: 300,
-			timeoutMs: 10000
+			timeoutMs: 10000,
 		}))();
 </script>
 
 <Formsnap
 	{form}
 	method="post"
-	fields={[{ name: "code", label: "Code", inputProps: { autocomplete: "one-time-code" } }]}
+	fields={[
+		{ name: "code", label: "Code", inputProps: { autocomplete: "one-time-code", autofocus: true } },
+	]}
 	buttons={[
 		{ label: "Verify" },
-		{ label: "Use Backup Code", href: "/2fa/backup-code", variant: "outline" }
+		{ label: "Use Backup Code", href: "/2fa/backup-code", variant: "outline" },
 	]}
 >
 	<h1>Authenticate with authenticator app</h1>

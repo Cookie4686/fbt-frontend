@@ -1,4 +1,4 @@
-import { REDIS_URL } from "$env/static/private";
+import { REDIS_URL } from "$app/env/private";
 import { Redis } from "ioredis";
 
 const redis = new Redis(REDIS_URL);

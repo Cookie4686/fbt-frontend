@@ -14,50 +14,50 @@ const sessionCookieName = "auth-session";
 const client = createClient(SessionService, transport);
 
 export function getSessionToken(event: RequestEvent) {
-	return event.cookies.get(sessionCookieName);
+  return event.cookies.get(sessionCookieName);
 }
 
 export function setSessionToken(event: RequestEvent, token: string) {
-	event.cookies.set(sessionCookieName, token, {
-		httpOnly: true,
-		expires: new Date(Date.now() + DAY_IN_MS * 30),
-		path: "/",
-		sameSite: "lax",
-		secure: import.meta.env.PROD,
-	});
+  event.cookies.set(sessionCookieName, token, {
+    httpOnly: true,
+    expires: new Date(Date.now() + DAY_IN_MS * 30),
+    path: "/",
+    sameSite: "lax",
+    secure: import.meta.env.PROD,
+  });
 }
 
 export function deleteSessionToken(event: RequestEvent) {
-	event.cookies.delete(sessionCookieName, { path: "/" });
+  event.cookies.delete(sessionCookieName, { path: "/" });
 }
 
 // Invalidate Session and Delete Session Token if success
 export async function invalidateSession(event: RequestEvent): Promise<boolean> {
-	const sessionToken = getSessionToken(event);
+  const sessionToken = getSessionToken(event);
 
-	if (sessionToken) {
-		try {
-			await client.logout({}, withTokenHeader(sessionToken));
-			deleteSessionToken(event);
-		} catch (error) {
-			console.error(error);
-			return false;
-		}
-	}
-	return true;
+  if (sessionToken) {
+    try {
+      await client.logout({}, withTokenHeader(sessionToken));
+      deleteSessionToken(event);
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+  return true;
 }
 
 export async function validateSession(event: RequestEvent): Promise<void> {
-	try {
-		const sessionToken = getSessionToken(event);
-		if (sessionToken) {
-			const { session, user } = await client.validate({}, withTokenHeader(sessionToken));
-			if (!session || !user) error(H.C_500_INTERNAL_SERVER_ERROR);
+  try {
+    const sessionToken = getSessionToken(event);
+    if (sessionToken) {
+      const { session, user } = await client.validate({}, withTokenHeader(sessionToken));
+      if (!session || !user) error(H.C_500_INTERNAL_SERVER_ERROR);
 
-			event.locals.session = ProtoToSession(session);
-			event.locals.user = ProtoToUser(user);
-		}
-	} catch (error) {
-		handleError(error);
-	}
+      event.locals.session = ProtoToSession(session);
+      event.locals.user = ProtoToUser(user);
+    }
+  } catch (error) {
+    handleError(error);
+  }
 }
