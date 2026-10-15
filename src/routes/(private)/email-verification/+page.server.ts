@@ -1,6 +1,7 @@
 import { fail, redirect } from "@sveltejs/kit";
-import Route from "$lib/route";
-import { hasEmailVerification, sendEmailOTP, verifyEmailOTP } from "$lib/server/auth/email";
+
+import Route from "#lib/route.js";
+import { hasEmailVerification, sendEmailOTP, verifyEmailOTP } from "#lib/server/auth/email.js";
 
 import type { Actions, PageServerLoad } from "./$types";
 

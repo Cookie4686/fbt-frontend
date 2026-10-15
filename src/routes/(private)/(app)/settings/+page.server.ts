@@ -1,29 +1,30 @@
 import { fail } from "@sveltejs/kit";
-import { updatePasswordSchema } from "$lib/schema/settings";
-import { getUserMFA } from "$lib/server/auth/mfa";
-import { getUserOAuth, unlink } from "$lib/server/auth/oauth";
-import { ExpiringTokenBucket } from "$lib/server/rate-limit";
-// import { updateUserPassword, verifyUserPassword } from "$lib/server/auth/credential";
+// import { updateUserPassword, verifyUserPassword } from "#lib/server/auth/credential.js";
 // import {
 // 	EmailVerificationRequest,
 // 	sendVerificationEmailBucket,
-// } from "$lib/server/auth/email-verification";
-// import { ExpiringTokenBucket } from "$lib/server/auth/rate-limit";
-// // import { get2FARedirect } from "$lib/server/2fa";
+// } from "#lib/server/auth/email-verification";
+// import { ExpiringTokenBucket } from "#lib/server/auth/rate-limit";
+// // import { get2FARedirect } from "#lib/server/2fa";
 import { message, superValidate } from "sveltekit-superforms";
 import { zod4 } from "sveltekit-superforms/adapters";
+
+import { updatePasswordSchema } from "#lib/schema/settings.js";
+import { getUserMFA } from "#lib/server/auth/mfa.js";
+import { getUserOAuth, unlink } from "#lib/server/auth/oauth.js";
+import { ExpiringTokenBucket } from "#lib/server/rate-limit.js";
 
 // import {
 // 	createSessionAndSetCookie,
 // 	invalidateAllUserSessions,
 // } from "@/server/auth/session";
-// // import { getUserPasswordHash, getUserRecoverCode, resetUserRecoveryCode, updateUserPassword } from "$lib/server/user";
+// // import { getUserPasswordHash, getUserRecoverCode, resetUserRecoveryCode, updateUserPassword } from "#lib/server/user";
 // // import {
 // // 	deleteUserPasskeyCredential,
 // // 	deleteUserSecurityKeyCredential,
 // // 	getUserPasskeyCredentials,
 // // 	getUserSecurityKeyCredentials
-// // } from "$lib/server/webauthn";
+// // } from "#lib/server/webauthn";
 // import { deleteUserTOTPKey, totpUpdateBucket } from "@/server/auth/totp";
 // import { getUserBackupCodesCount } from "@/server/auth/backup-code";
 import type { Actions, PageServerLoad } from "./$types";

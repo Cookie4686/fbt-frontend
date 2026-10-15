@@ -12,135 +12,142 @@ import type { Message } from "@bufbuild/protobuf";
 /**
  * Describes the file auth/v1/mfa.proto.
  */
-export const file_auth_v1_mfa: GenFile = /*@__PURE__*/
-  fileDesc("ChFhdXRoL3YxL21mYS5wcm90bxIHYXV0aC52MSIZChdNRkFTZXJ2aWNlU3RhdHVzUmVxdWVzdCIwChhNRkFTZXJ2aWNlU3RhdHVzUmVzcG9uc2USFAoMdG90cF9lbmFibGVkGAEgASgIIjUKHU1GQVNlcnZpY2VUT1RQVmFsaWRhdGVSZXF1ZXN0EhQKBGNvZGUYASABKAlCBrpIA8gBASJLCh5NRkFTZXJ2aWNlVE9UUFZhbGlkYXRlUmVzcG9uc2USKQoHc2Vzc2lvbhgBIAEoCzIQLmF1dGgudjEuU2Vzc2lvbkIGukgDyAEBIjUKHk1GQVNlcnZpY2VUT1RQVXBzZXJ0S2V5UmVxdWVzdBITCgNrZXkYASABKAlCBrpIA8gBASJMCh9NRkFTZXJ2aWNlVE9UUFVwc2VydEtleVJlc3BvbnNlEikKB3Nlc3Npb24YASABKAsyEC5hdXRoLnYxLlNlc3Npb25CBrpIA8gBATKmAgoKTUZBU2VydmljZRJPCgZTdGF0dXMSIC5hdXRoLnYxLk1GQVNlcnZpY2VTdGF0dXNSZXF1ZXN0GiEuYXV0aC52MS5NRkFTZXJ2aWNlU3RhdHVzUmVzcG9uc2UiABJhCgxUT1RQVmFsaWRhdGUSJi5hdXRoLnYxLk1GQVNlcnZpY2VUT1RQVmFsaWRhdGVSZXF1ZXN0GicuYXV0aC52MS5NRkFTZXJ2aWNlVE9UUFZhbGlkYXRlUmVzcG9uc2UiABJkCg1UT1RQVXBzZXJ0S2V5EicuYXV0aC52MS5NRkFTZXJ2aWNlVE9UUFVwc2VydEtleVJlcXVlc3QaKC5hdXRoLnYxLk1GQVNlcnZpY2VUT1RQVXBzZXJ0S2V5UmVzcG9uc2UiAGIGcHJvdG8z", [file_auth_v1_common, file_buf_validate_validate]);
+export const file_auth_v1_mfa: GenFile =
+	/*@__PURE__*/
+	fileDesc(
+		"ChFhdXRoL3YxL21mYS5wcm90bxIHYXV0aC52MSIZChdNRkFTZXJ2aWNlU3RhdHVzUmVxdWVzdCIwChhNRkFTZXJ2aWNlU3RhdHVzUmVzcG9uc2USFAoMdG90cF9lbmFibGVkGAEgASgIIjUKHU1GQVNlcnZpY2VUT1RQVmFsaWRhdGVSZXF1ZXN0EhQKBGNvZGUYASABKAlCBrpIA8gBASJLCh5NRkFTZXJ2aWNlVE9UUFZhbGlkYXRlUmVzcG9uc2USKQoHc2Vzc2lvbhgBIAEoCzIQLmF1dGgudjEuU2Vzc2lvbkIGukgDyAEBIjUKHk1GQVNlcnZpY2VUT1RQVXBzZXJ0S2V5UmVxdWVzdBITCgNrZXkYASABKAlCBrpIA8gBASJMCh9NRkFTZXJ2aWNlVE9UUFVwc2VydEtleVJlc3BvbnNlEikKB3Nlc3Npb24YASABKAsyEC5hdXRoLnYxLlNlc3Npb25CBrpIA8gBATKmAgoKTUZBU2VydmljZRJPCgZTdGF0dXMSIC5hdXRoLnYxLk1GQVNlcnZpY2VTdGF0dXNSZXF1ZXN0GiEuYXV0aC52MS5NRkFTZXJ2aWNlU3RhdHVzUmVzcG9uc2UiABJhCgxUT1RQVmFsaWRhdGUSJi5hdXRoLnYxLk1GQVNlcnZpY2VUT1RQVmFsaWRhdGVSZXF1ZXN0GicuYXV0aC52MS5NRkFTZXJ2aWNlVE9UUFZhbGlkYXRlUmVzcG9uc2UiABJkCg1UT1RQVXBzZXJ0S2V5EicuYXV0aC52MS5NRkFTZXJ2aWNlVE9UUFVwc2VydEtleVJlcXVlc3QaKC5hdXRoLnYxLk1GQVNlcnZpY2VUT1RQVXBzZXJ0S2V5UmVzcG9uc2UiAGIGcHJvdG8z",
+		[file_auth_v1_common, file_buf_validate_validate]
+	);
 
 /**
  * @generated from message auth.v1.MFAServiceStatusRequest
  */
-export type MFAServiceStatusRequest = Message<"auth.v1.MFAServiceStatusRequest"> & {
-};
+export type MFAServiceStatusRequest = Message<"auth.v1.MFAServiceStatusRequest"> & {};
 
 /**
  * Describes the message auth.v1.MFAServiceStatusRequest.
  * Use `create(MFAServiceStatusRequestSchema)` to create a new message.
  */
-export const MFAServiceStatusRequestSchema: GenMessage<MFAServiceStatusRequest> = /*@__PURE__*/
-  messageDesc(file_auth_v1_mfa, 0);
+export const MFAServiceStatusRequestSchema: GenMessage<MFAServiceStatusRequest> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_mfa, 0);
 
 /**
  * @generated from message auth.v1.MFAServiceStatusResponse
  */
 export type MFAServiceStatusResponse = Message<"auth.v1.MFAServiceStatusResponse"> & {
-  /**
-   * @generated from field: bool totp_enabled = 1;
-   */
-  totpEnabled: boolean;
+	/**
+	 * @generated from field: bool totp_enabled = 1;
+	 */
+	totpEnabled: boolean;
 };
 
 /**
  * Describes the message auth.v1.MFAServiceStatusResponse.
  * Use `create(MFAServiceStatusResponseSchema)` to create a new message.
  */
-export const MFAServiceStatusResponseSchema: GenMessage<MFAServiceStatusResponse> = /*@__PURE__*/
-  messageDesc(file_auth_v1_mfa, 1);
+export const MFAServiceStatusResponseSchema: GenMessage<MFAServiceStatusResponse> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_mfa, 1);
 
 /**
  * @generated from message auth.v1.MFAServiceTOTPValidateRequest
  */
 export type MFAServiceTOTPValidateRequest = Message<"auth.v1.MFAServiceTOTPValidateRequest"> & {
-  /**
-   * @generated from field: string code = 1;
-   */
-  code: string;
+	/**
+	 * @generated from field: string code = 1;
+	 */
+	code: string;
 };
 
 /**
  * Describes the message auth.v1.MFAServiceTOTPValidateRequest.
  * Use `create(MFAServiceTOTPValidateRequestSchema)` to create a new message.
  */
-export const MFAServiceTOTPValidateRequestSchema: GenMessage<MFAServiceTOTPValidateRequest> = /*@__PURE__*/
-  messageDesc(file_auth_v1_mfa, 2);
+export const MFAServiceTOTPValidateRequestSchema: GenMessage<MFAServiceTOTPValidateRequest> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_mfa, 2);
 
 /**
  * @generated from message auth.v1.MFAServiceTOTPValidateResponse
  */
 export type MFAServiceTOTPValidateResponse = Message<"auth.v1.MFAServiceTOTPValidateResponse"> & {
-  /**
-   * @generated from field: auth.v1.Session session = 1;
-   */
-  session?: Session | undefined;
+	/**
+	 * @generated from field: auth.v1.Session session = 1;
+	 */
+	session?: Session | undefined;
 };
 
 /**
  * Describes the message auth.v1.MFAServiceTOTPValidateResponse.
  * Use `create(MFAServiceTOTPValidateResponseSchema)` to create a new message.
  */
-export const MFAServiceTOTPValidateResponseSchema: GenMessage<MFAServiceTOTPValidateResponse> = /*@__PURE__*/
-  messageDesc(file_auth_v1_mfa, 3);
+export const MFAServiceTOTPValidateResponseSchema: GenMessage<MFAServiceTOTPValidateResponse> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_mfa, 3);
 
 /**
  * @generated from message auth.v1.MFAServiceTOTPUpsertKeyRequest
  */
 export type MFAServiceTOTPUpsertKeyRequest = Message<"auth.v1.MFAServiceTOTPUpsertKeyRequest"> & {
-  /**
-   * @generated from field: string key = 1;
-   */
-  key: string;
+	/**
+	 * @generated from field: string key = 1;
+	 */
+	key: string;
 };
 
 /**
  * Describes the message auth.v1.MFAServiceTOTPUpsertKeyRequest.
  * Use `create(MFAServiceTOTPUpsertKeyRequestSchema)` to create a new message.
  */
-export const MFAServiceTOTPUpsertKeyRequestSchema: GenMessage<MFAServiceTOTPUpsertKeyRequest> = /*@__PURE__*/
-  messageDesc(file_auth_v1_mfa, 4);
+export const MFAServiceTOTPUpsertKeyRequestSchema: GenMessage<MFAServiceTOTPUpsertKeyRequest> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_mfa, 4);
 
 /**
  * @generated from message auth.v1.MFAServiceTOTPUpsertKeyResponse
  */
 export type MFAServiceTOTPUpsertKeyResponse = Message<"auth.v1.MFAServiceTOTPUpsertKeyResponse"> & {
-  /**
-   * @generated from field: auth.v1.Session session = 1;
-   */
-  session?: Session | undefined;
+	/**
+	 * @generated from field: auth.v1.Session session = 1;
+	 */
+	session?: Session | undefined;
 };
 
 /**
  * Describes the message auth.v1.MFAServiceTOTPUpsertKeyResponse.
  * Use `create(MFAServiceTOTPUpsertKeyResponseSchema)` to create a new message.
  */
-export const MFAServiceTOTPUpsertKeyResponseSchema: GenMessage<MFAServiceTOTPUpsertKeyResponse> = /*@__PURE__*/
-  messageDesc(file_auth_v1_mfa, 5);
+export const MFAServiceTOTPUpsertKeyResponseSchema: GenMessage<MFAServiceTOTPUpsertKeyResponse> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_mfa, 5);
 
 /**
  * @generated from service auth.v1.MFAService
  */
 export const MFAService: GenService<{
-  /**
-   * @generated from rpc auth.v1.MFAService.Status
-   */
-  status: {
-    methodKind: "unary";
-    input: typeof MFAServiceStatusRequestSchema;
-    output: typeof MFAServiceStatusResponseSchema;
-  },
-  /**
-   * @generated from rpc auth.v1.MFAService.TOTPValidate
-   */
-  tOTPValidate: {
-    methodKind: "unary";
-    input: typeof MFAServiceTOTPValidateRequestSchema;
-    output: typeof MFAServiceTOTPValidateResponseSchema;
-  },
-  /**
-   * @generated from rpc auth.v1.MFAService.TOTPUpsertKey
-   */
-  tOTPUpsertKey: {
-    methodKind: "unary";
-    input: typeof MFAServiceTOTPUpsertKeyRequestSchema;
-    output: typeof MFAServiceTOTPUpsertKeyResponseSchema;
-  },
-}> = /*@__PURE__*/
-  serviceDesc(file_auth_v1_mfa, 0);
-
+	/**
+	 * @generated from rpc auth.v1.MFAService.Status
+	 */
+	status: {
+		methodKind: "unary";
+		input: typeof MFAServiceStatusRequestSchema;
+		output: typeof MFAServiceStatusResponseSchema;
+	};
+	/**
+	 * @generated from rpc auth.v1.MFAService.TOTPValidate
+	 */
+	tOTPValidate: {
+		methodKind: "unary";
+		input: typeof MFAServiceTOTPValidateRequestSchema;
+		output: typeof MFAServiceTOTPValidateResponseSchema;
+	};
+	/**
+	 * @generated from rpc auth.v1.MFAService.TOTPUpsertKey
+	 */
+	tOTPUpsertKey: {
+		methodKind: "unary";
+		input: typeof MFAServiceTOTPUpsertKeyRequestSchema;
+		output: typeof MFAServiceTOTPUpsertKeyResponseSchema;
+	};
+}> = /*@__PURE__*/ serviceDesc(file_auth_v1_mfa, 0);

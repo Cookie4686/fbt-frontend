@@ -4,15 +4,16 @@
 		startRegistration,
 	} from "@simplewebauthn/browser";
 	import { enhance } from "$app/forms";
-	import googleLogo from "$lib/assets/Google_Favicon_2025.svg";
-	import lineLogo from "$lib/assets/LINE_logo.svg";
-	import Formsnap from "$lib/components/formsnap.svelte";
-	import Button from "$lib/components/ui/button/button.svelte";
-	import Route from "$lib/route";
-	import { updatePasswordSchema } from "$lib/schema/settings";
-	import { type Provider } from "$lib/server/auth/provider";
 	import { superForm } from "sveltekit-superforms";
 	import { zod4Client } from "sveltekit-superforms/adapters";
+
+	import googleLogo from "#lib/assets/Google_Favicon_2025.svg";
+	import lineLogo from "#lib/assets/LINE_logo.svg";
+	import Formsnap from "#lib/components/formsnap.svelte";
+	import Button from "#lib/components/ui/button/button.svelte";
+	import Route from "#lib/route.js";
+	import { updatePasswordSchema } from "#lib/schema/settings.js";
+	import { type Provider } from "#lib/server/auth/provider.js";
 
 	import type { PageServerData } from "./$types";
 
@@ -75,7 +76,7 @@
 	};
 </script>
 
-<main class="flex flex-col space-y-8 items-center">
+<main class="flex flex-col items-center space-y-8">
 	<h1 class="text-center">Settings</h1>
 	<section>
 		<p>Username: {data.user.username}</p>
@@ -108,7 +109,7 @@
 		<h2>OAuth Authentication</h2>
 		<div class="flex flex-col gap-2">
 			{#each Object.entries(providers) as [provider, logo] (provider)}
-				<div class="grid grid-cols-2 gap-4 items-center justify-between">
+				<div class="grid grid-cols-2 items-center justify-between gap-4">
 					<img src={logo} alt={provider} width="48" height="48" />
 					{#if data.providers.includes(provider)}
 						<form class="w-full" method="post" use:enhance action="?/unlink_oauth">
@@ -140,7 +141,7 @@
 
 	<section>
 		<h2 class="text-center">Authenticator app</h2>
-		<div class="flex gap-2 items-center flex-col">
+		<div class="flex flex-col items-center gap-2">
 			{#if data.mfaList.totp}
 				<Button href={Route.P_2FA_TOTP_SETUP}>Update TOTP</Button>
 				<form method="post" use:enhance action="?/disconnect_totp">

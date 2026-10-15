@@ -5,8 +5,9 @@
 	import type { FormPath } from "sveltekit-superforms";
 
 	import Loader2Icon from "@lucide/svelte/icons/loader-2";
-	import * as Form from "$lib/components/ui/form/index.js";
-	import { Input } from "$lib/components/ui/input";
+
+	import * as Form from "#lib/components/ui/form/index.js";
+	import { Input } from "#lib/components/ui/input/index.js";
 
 	interface FormSnapProps {
 		form: FsSuperForm<T>;

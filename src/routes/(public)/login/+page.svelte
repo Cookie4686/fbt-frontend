@@ -2,13 +2,14 @@
 	import { startAuthentication } from "@simplewebauthn/browser";
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
-	import Formsnap from "$lib/components/formsnap.svelte";
-	import { Button } from "$lib/components/ui/button";
-	import Route from "$lib/route";
-	// import { m } from "$lib/paraglide/messages.js";
-	import { loginSchema } from "$lib/schema/auth";
 	import { superForm } from "sveltekit-superforms";
 	import { zod4Client } from "sveltekit-superforms/adapters";
+
+	import Formsnap from "#lib/components/formsnap.svelte";
+	import { Button } from "#lib/components/ui/button/index.js";
+	import Route from "#lib/route.js";
+	// import { m } from "#lib/paraglide/messages.js";
+	import { loginSchema } from "#lib/schema/auth.js";
 
 	import type { PageServerData } from "./$types";
 

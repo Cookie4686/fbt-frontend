@@ -4,5 +4,5 @@ import { password } from "./auth";
 
 export const updatePasswordSchema = z.object({
 	currentPassword: z.string(),
-	newPassword: password
+	newPassword: password,
 });

@@ -1,11 +1,12 @@
 import { fail, isHttpError, redirect } from "@sveltejs/kit";
-import Route from "$lib/route";
-import { totpVerifyFormSchema } from "$lib/schema/mfa";
-import { validateTOTP } from "$lib/server/auth/mfa";
-import H from "$lib/server/http-code";
-import { ExpiringTokenBucket } from "$lib/server/rate-limit";
 import { message, setError, superValidate } from "sveltekit-superforms";
 import { zod4 } from "sveltekit-superforms/adapters";
+
+import Route from "#lib/route.js";
+import { totpVerifyFormSchema } from "#lib/schema/mfa.js";
+import { validateTOTP } from "#lib/server/auth/mfa.js";
+import H from "#lib/server/http-code.js";
+import { ExpiringTokenBucket } from "#lib/server/rate-limit.js";
 
 import type { Actions, PageServerLoad } from "./$types";
 

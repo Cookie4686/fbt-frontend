@@ -1,5 +1,6 @@
 import { fail, redirect } from "@sveltejs/kit";
-import { invalidateSession } from "$lib/server/auth/session";
+
+import { invalidateSession } from "#lib/server/auth/session.js";
 
 import type { Actions } from "./$types";
 
@@ -12,5 +13,5 @@ export const actions: Actions = {
 		}
 
 		return fail(500);
-	}
+	},
 };

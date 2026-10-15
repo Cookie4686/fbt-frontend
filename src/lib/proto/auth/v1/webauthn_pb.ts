@@ -12,154 +12,168 @@ import type { Message } from "@bufbuild/protobuf";
 /**
  * Describes the file auth/v1/webauthn.proto.
  */
-export const file_auth_v1_webauthn: GenFile = /*@__PURE__*/
-  fileDesc("ChZhdXRoL3YxL3dlYmF1dGhuLnByb3RvEgdhdXRoLnYxIlwKJFdlYkF1dGhuU2VydmljZUdldFVzZXJQYXNza2V5UmVxdWVzdBIVCgVycF9pZBgBIAEoCUIGukgDyAEBEh0KDWNyZWRlbnRpYWxfaWQYAiABKAlCBrpIA8gBASJgCiVXZWJBdXRoblNlcnZpY2VHZXRVc2VyUGFzc2tleVJlc3BvbnNlEjcKCmNyZWRlbnRpYWwYASABKAsyGy5hdXRoLnYxLldlYkF1dGhuQ3JlZGVudGlhbEIGukgDyAEBImIKJ1dlYkF1dGhuU2VydmljZUNyZWF0ZVVzZXJQYXNza2V5UmVxdWVzdBI3CgpjcmVkZW50aWFsGAEgASgLMhsuYXV0aC52MS5XZWJBdXRobkNyZWRlbnRpYWxCBrpIA8gBASJjCihXZWJBdXRoblNlcnZpY2VDcmVhdGVVc2VyUGFzc2tleVJlc3BvbnNlEjcKCmNyZWRlbnRpYWwYASABKAsyGy5hdXRoLnYxLldlYkF1dGhuQ3JlZGVudGlhbEIGukgDyAEBInMKKldlYkF1dGhuU2VydmljZVVwZGF0ZVBhc3NrZXlDb3VudGVyUmVxdWVzdBIVCgVycF9pZBgBIAEoCUIGukgDyAEBEh0KDWNyZWRlbnRpYWxfaWQYAiABKAlCBrpIA8gBARIPCgdjb3VudGVyGAMgASgDIlgKK1dlYkF1dGhuU2VydmljZVVwZGF0ZVBhc3NrZXlDb3VudGVyUmVzcG9uc2USKQoHc2Vzc2lvbhgBIAEoCzIQLmF1dGgudjEuU2Vzc2lvbkIGukgDyAEBMoYDCg9XZWJBdXRoblNlcnZpY2UScQoOR2V0VXNlclBhc3NrZXkSLS5hdXRoLnYxLldlYkF1dGhuU2VydmljZUdldFVzZXJQYXNza2V5UmVxdWVzdBouLmF1dGgudjEuV2ViQXV0aG5TZXJ2aWNlR2V0VXNlclBhc3NrZXlSZXNwb25zZSIAEnoKEUNyZWF0ZVVzZXJQYXNza2V5EjAuYXV0aC52MS5XZWJBdXRoblNlcnZpY2VDcmVhdGVVc2VyUGFzc2tleVJlcXVlc3QaMS5hdXRoLnYxLldlYkF1dGhuU2VydmljZUNyZWF0ZVVzZXJQYXNza2V5UmVzcG9uc2UiABKDAQoUVXBkYXRlUGFzc2tleUNvdW50ZXISMy5hdXRoLnYxLldlYkF1dGhuU2VydmljZVVwZGF0ZVBhc3NrZXlDb3VudGVyUmVxdWVzdBo0LmF1dGgudjEuV2ViQXV0aG5TZXJ2aWNlVXBkYXRlUGFzc2tleUNvdW50ZXJSZXNwb25zZSIAYgZwcm90bzM", [file_auth_v1_common, file_buf_validate_validate]);
+export const file_auth_v1_webauthn: GenFile =
+	/*@__PURE__*/
+	fileDesc(
+		"ChZhdXRoL3YxL3dlYmF1dGhuLnByb3RvEgdhdXRoLnYxIlwKJFdlYkF1dGhuU2VydmljZUdldFVzZXJQYXNza2V5UmVxdWVzdBIVCgVycF9pZBgBIAEoCUIGukgDyAEBEh0KDWNyZWRlbnRpYWxfaWQYAiABKAlCBrpIA8gBASJgCiVXZWJBdXRoblNlcnZpY2VHZXRVc2VyUGFzc2tleVJlc3BvbnNlEjcKCmNyZWRlbnRpYWwYASABKAsyGy5hdXRoLnYxLldlYkF1dGhuQ3JlZGVudGlhbEIGukgDyAEBImIKJ1dlYkF1dGhuU2VydmljZUNyZWF0ZVVzZXJQYXNza2V5UmVxdWVzdBI3CgpjcmVkZW50aWFsGAEgASgLMhsuYXV0aC52MS5XZWJBdXRobkNyZWRlbnRpYWxCBrpIA8gBASJjCihXZWJBdXRoblNlcnZpY2VDcmVhdGVVc2VyUGFzc2tleVJlc3BvbnNlEjcKCmNyZWRlbnRpYWwYASABKAsyGy5hdXRoLnYxLldlYkF1dGhuQ3JlZGVudGlhbEIGukgDyAEBInMKKldlYkF1dGhuU2VydmljZVVwZGF0ZVBhc3NrZXlDb3VudGVyUmVxdWVzdBIVCgVycF9pZBgBIAEoCUIGukgDyAEBEh0KDWNyZWRlbnRpYWxfaWQYAiABKAlCBrpIA8gBARIPCgdjb3VudGVyGAMgASgDIlgKK1dlYkF1dGhuU2VydmljZVVwZGF0ZVBhc3NrZXlDb3VudGVyUmVzcG9uc2USKQoHc2Vzc2lvbhgBIAEoCzIQLmF1dGgudjEuU2Vzc2lvbkIGukgDyAEBMoYDCg9XZWJBdXRoblNlcnZpY2UScQoOR2V0VXNlclBhc3NrZXkSLS5hdXRoLnYxLldlYkF1dGhuU2VydmljZUdldFVzZXJQYXNza2V5UmVxdWVzdBouLmF1dGgudjEuV2ViQXV0aG5TZXJ2aWNlR2V0VXNlclBhc3NrZXlSZXNwb25zZSIAEnoKEUNyZWF0ZVVzZXJQYXNza2V5EjAuYXV0aC52MS5XZWJBdXRoblNlcnZpY2VDcmVhdGVVc2VyUGFzc2tleVJlcXVlc3QaMS5hdXRoLnYxLldlYkF1dGhuU2VydmljZUNyZWF0ZVVzZXJQYXNza2V5UmVzcG9uc2UiABKDAQoUVXBkYXRlUGFzc2tleUNvdW50ZXISMy5hdXRoLnYxLldlYkF1dGhuU2VydmljZVVwZGF0ZVBhc3NrZXlDb3VudGVyUmVxdWVzdBo0LmF1dGgudjEuV2ViQXV0aG5TZXJ2aWNlVXBkYXRlUGFzc2tleUNvdW50ZXJSZXNwb25zZSIAYgZwcm90bzM",
+		[file_auth_v1_common, file_buf_validate_validate]
+	);
 
 /**
  * @generated from message auth.v1.WebAuthnServiceGetUserPasskeyRequest
  */
-export type WebAuthnServiceGetUserPasskeyRequest = Message<"auth.v1.WebAuthnServiceGetUserPasskeyRequest"> & {
-  /**
-   * @generated from field: string rp_id = 1;
-   */
-  rpId: string;
+export type WebAuthnServiceGetUserPasskeyRequest =
+	Message<"auth.v1.WebAuthnServiceGetUserPasskeyRequest"> & {
+		/**
+		 * @generated from field: string rp_id = 1;
+		 */
+		rpId: string;
 
-  /**
-   * @generated from field: string credential_id = 2;
-   */
-  credentialId: string;
-};
+		/**
+		 * @generated from field: string credential_id = 2;
+		 */
+		credentialId: string;
+	};
 
 /**
  * Describes the message auth.v1.WebAuthnServiceGetUserPasskeyRequest.
  * Use `create(WebAuthnServiceGetUserPasskeyRequestSchema)` to create a new message.
  */
-export const WebAuthnServiceGetUserPasskeyRequestSchema: GenMessage<WebAuthnServiceGetUserPasskeyRequest> = /*@__PURE__*/
-  messageDesc(file_auth_v1_webauthn, 0);
+export const WebAuthnServiceGetUserPasskeyRequestSchema: GenMessage<WebAuthnServiceGetUserPasskeyRequest> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_webauthn, 0);
 
 /**
  * @generated from message auth.v1.WebAuthnServiceGetUserPasskeyResponse
  */
-export type WebAuthnServiceGetUserPasskeyResponse = Message<"auth.v1.WebAuthnServiceGetUserPasskeyResponse"> & {
-  /**
-   * @generated from field: auth.v1.WebAuthnCredential credential = 1;
-   */
-  credential?: WebAuthnCredential | undefined;
-};
+export type WebAuthnServiceGetUserPasskeyResponse =
+	Message<"auth.v1.WebAuthnServiceGetUserPasskeyResponse"> & {
+		/**
+		 * @generated from field: auth.v1.WebAuthnCredential credential = 1;
+		 */
+		credential?: WebAuthnCredential | undefined;
+	};
 
 /**
  * Describes the message auth.v1.WebAuthnServiceGetUserPasskeyResponse.
  * Use `create(WebAuthnServiceGetUserPasskeyResponseSchema)` to create a new message.
  */
-export const WebAuthnServiceGetUserPasskeyResponseSchema: GenMessage<WebAuthnServiceGetUserPasskeyResponse> = /*@__PURE__*/
-  messageDesc(file_auth_v1_webauthn, 1);
+export const WebAuthnServiceGetUserPasskeyResponseSchema: GenMessage<WebAuthnServiceGetUserPasskeyResponse> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_webauthn, 1);
 
 /**
  * @generated from message auth.v1.WebAuthnServiceCreateUserPasskeyRequest
  */
-export type WebAuthnServiceCreateUserPasskeyRequest = Message<"auth.v1.WebAuthnServiceCreateUserPasskeyRequest"> & {
-  /**
-   * @generated from field: auth.v1.WebAuthnCredential credential = 1;
-   */
-  credential?: WebAuthnCredential | undefined;
-};
+export type WebAuthnServiceCreateUserPasskeyRequest =
+	Message<"auth.v1.WebAuthnServiceCreateUserPasskeyRequest"> & {
+		/**
+		 * @generated from field: auth.v1.WebAuthnCredential credential = 1;
+		 */
+		credential?: WebAuthnCredential | undefined;
+	};
 
 /**
  * Describes the message auth.v1.WebAuthnServiceCreateUserPasskeyRequest.
  * Use `create(WebAuthnServiceCreateUserPasskeyRequestSchema)` to create a new message.
  */
-export const WebAuthnServiceCreateUserPasskeyRequestSchema: GenMessage<WebAuthnServiceCreateUserPasskeyRequest> = /*@__PURE__*/
-  messageDesc(file_auth_v1_webauthn, 2);
+export const WebAuthnServiceCreateUserPasskeyRequestSchema: GenMessage<WebAuthnServiceCreateUserPasskeyRequest> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_webauthn, 2);
 
 /**
  * @generated from message auth.v1.WebAuthnServiceCreateUserPasskeyResponse
  */
-export type WebAuthnServiceCreateUserPasskeyResponse = Message<"auth.v1.WebAuthnServiceCreateUserPasskeyResponse"> & {
-  /**
-   * @generated from field: auth.v1.WebAuthnCredential credential = 1;
-   */
-  credential?: WebAuthnCredential | undefined;
-};
+export type WebAuthnServiceCreateUserPasskeyResponse =
+	Message<"auth.v1.WebAuthnServiceCreateUserPasskeyResponse"> & {
+		/**
+		 * @generated from field: auth.v1.WebAuthnCredential credential = 1;
+		 */
+		credential?: WebAuthnCredential | undefined;
+	};
 
 /**
  * Describes the message auth.v1.WebAuthnServiceCreateUserPasskeyResponse.
  * Use `create(WebAuthnServiceCreateUserPasskeyResponseSchema)` to create a new message.
  */
-export const WebAuthnServiceCreateUserPasskeyResponseSchema: GenMessage<WebAuthnServiceCreateUserPasskeyResponse> = /*@__PURE__*/
-  messageDesc(file_auth_v1_webauthn, 3);
+export const WebAuthnServiceCreateUserPasskeyResponseSchema: GenMessage<WebAuthnServiceCreateUserPasskeyResponse> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_webauthn, 3);
 
 /**
  * @generated from message auth.v1.WebAuthnServiceUpdatePasskeyCounterRequest
  */
-export type WebAuthnServiceUpdatePasskeyCounterRequest = Message<"auth.v1.WebAuthnServiceUpdatePasskeyCounterRequest"> & {
-  /**
-   * @generated from field: string rp_id = 1;
-   */
-  rpId: string;
+export type WebAuthnServiceUpdatePasskeyCounterRequest =
+	Message<"auth.v1.WebAuthnServiceUpdatePasskeyCounterRequest"> & {
+		/**
+		 * @generated from field: string rp_id = 1;
+		 */
+		rpId: string;
 
-  /**
-   * @generated from field: string credential_id = 2;
-   */
-  credentialId: string;
+		/**
+		 * @generated from field: string credential_id = 2;
+		 */
+		credentialId: string;
 
-  /**
-   * @generated from field: int64 counter = 3;
-   */
-  counter: bigint;
-};
+		/**
+		 * @generated from field: int64 counter = 3;
+		 */
+		counter: bigint;
+	};
 
 /**
  * Describes the message auth.v1.WebAuthnServiceUpdatePasskeyCounterRequest.
  * Use `create(WebAuthnServiceUpdatePasskeyCounterRequestSchema)` to create a new message.
  */
-export const WebAuthnServiceUpdatePasskeyCounterRequestSchema: GenMessage<WebAuthnServiceUpdatePasskeyCounterRequest> = /*@__PURE__*/
-  messageDesc(file_auth_v1_webauthn, 4);
+export const WebAuthnServiceUpdatePasskeyCounterRequestSchema: GenMessage<WebAuthnServiceUpdatePasskeyCounterRequest> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_webauthn, 4);
 
 /**
  * @generated from message auth.v1.WebAuthnServiceUpdatePasskeyCounterResponse
  */
-export type WebAuthnServiceUpdatePasskeyCounterResponse = Message<"auth.v1.WebAuthnServiceUpdatePasskeyCounterResponse"> & {
-  /**
-   * @generated from field: auth.v1.Session session = 1;
-   */
-  session?: Session | undefined;
-};
+export type WebAuthnServiceUpdatePasskeyCounterResponse =
+	Message<"auth.v1.WebAuthnServiceUpdatePasskeyCounterResponse"> & {
+		/**
+		 * @generated from field: auth.v1.Session session = 1;
+		 */
+		session?: Session | undefined;
+	};
 
 /**
  * Describes the message auth.v1.WebAuthnServiceUpdatePasskeyCounterResponse.
  * Use `create(WebAuthnServiceUpdatePasskeyCounterResponseSchema)` to create a new message.
  */
-export const WebAuthnServiceUpdatePasskeyCounterResponseSchema: GenMessage<WebAuthnServiceUpdatePasskeyCounterResponse> = /*@__PURE__*/
-  messageDesc(file_auth_v1_webauthn, 5);
+export const WebAuthnServiceUpdatePasskeyCounterResponseSchema: GenMessage<WebAuthnServiceUpdatePasskeyCounterResponse> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_webauthn, 5);
 
 /**
  * @generated from service auth.v1.WebAuthnService
  */
 export const WebAuthnService: GenService<{
-  /**
-   * @generated from rpc auth.v1.WebAuthnService.GetUserPasskey
-   */
-  getUserPasskey: {
-    methodKind: "unary";
-    input: typeof WebAuthnServiceGetUserPasskeyRequestSchema;
-    output: typeof WebAuthnServiceGetUserPasskeyResponseSchema;
-  },
-  /**
-   * @generated from rpc auth.v1.WebAuthnService.CreateUserPasskey
-   */
-  createUserPasskey: {
-    methodKind: "unary";
-    input: typeof WebAuthnServiceCreateUserPasskeyRequestSchema;
-    output: typeof WebAuthnServiceCreateUserPasskeyResponseSchema;
-  },
-  /**
-   * @generated from rpc auth.v1.WebAuthnService.UpdatePasskeyCounter
-   */
-  updatePasskeyCounter: {
-    methodKind: "unary";
-    input: typeof WebAuthnServiceUpdatePasskeyCounterRequestSchema;
-    output: typeof WebAuthnServiceUpdatePasskeyCounterResponseSchema;
-  },
-}> = /*@__PURE__*/
-  serviceDesc(file_auth_v1_webauthn, 0);
-
+	/**
+	 * @generated from rpc auth.v1.WebAuthnService.GetUserPasskey
+	 */
+	getUserPasskey: {
+		methodKind: "unary";
+		input: typeof WebAuthnServiceGetUserPasskeyRequestSchema;
+		output: typeof WebAuthnServiceGetUserPasskeyResponseSchema;
+	};
+	/**
+	 * @generated from rpc auth.v1.WebAuthnService.CreateUserPasskey
+	 */
+	createUserPasskey: {
+		methodKind: "unary";
+		input: typeof WebAuthnServiceCreateUserPasskeyRequestSchema;
+		output: typeof WebAuthnServiceCreateUserPasskeyResponseSchema;
+	};
+	/**
+	 * @generated from rpc auth.v1.WebAuthnService.UpdatePasskeyCounter
+	 */
+	updatePasskeyCounter: {
+		methodKind: "unary";
+		input: typeof WebAuthnServiceUpdatePasskeyCounterRequestSchema;
+		output: typeof WebAuthnServiceUpdatePasskeyCounterResponseSchema;
+	};
+}> = /*@__PURE__*/ serviceDesc(file_auth_v1_webauthn, 0);

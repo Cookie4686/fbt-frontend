@@ -3,13 +3,14 @@ import {
 	verifyAuthenticationResponse,
 } from "@simplewebauthn/server";
 import { error, type RequestHandler } from "@sveltejs/kit";
+
 import {
 	getCurrentAuthenticationOptions,
 	getUserPasskey,
 	rpID,
 	rpOrigin,
 	updatePasskeyCounter,
-} from "$lib/server/auth/webauthn";
+} from "#lib/server/auth/webauthn.js";
 
 export const POST: RequestHandler = async (event) => {
 	const clientIP = event.getClientAddress();

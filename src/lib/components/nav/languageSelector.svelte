@@ -1,8 +1,9 @@
 <script lang="ts">
 	import LanguageIcon from "@lucide/svelte/icons/languages";
-	import { buttonVariants } from "$lib/components/ui/button/index.js";
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import { setLocale } from "$lib/paraglide/runtime";
+
+	import { buttonVariants } from "#lib/components/ui/button/index.js";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.js";
+	import { setLocale } from "#lib/paraglide/runtime.js";
 </script>
 
 <DropdownMenu.Root>

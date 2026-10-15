@@ -14,178 +14,194 @@ import type { Message } from "@bufbuild/protobuf";
 /**
  * Describes the file bookkeeping/v1/transaction.proto.
  */
-export const file_bookkeeping_v1_transaction: GenFile = /*@__PURE__*/
-  fileDesc("CiBib29ra2VlcGluZy92MS90cmFuc2FjdGlvbi5wcm90bxIOYm9va2tlZXBpbmcudjEiIQofVHJhbnNhY3Rpb25TZXJ2aWNlR2V0QWxsUmVxdWVzdCJnCiBUcmFuc2FjdGlvblNlcnZpY2VHZXRBbGxSZXNwb25zZRJDChF0cmFuc2FjdGlvbl9lbnRyeRgBIAMoCzIgLmJvb2trZWVwaW5nLnYxLlRyYW5zYWN0aW9uRW50cnlCBrpIA8gBASKDAQofVHJhbnNhY3Rpb25TZXJ2aWNlQ3JlYXRlUmVxdWVzdBIwCgR0aW1lGAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEIGukgDyAEBEi4KB2VudHJpZXMYAiADKAsyFS5ib29ra2VlcGluZy52MS5FbnRyeUIGukgDyAEBImcKIFRyYW5zYWN0aW9uU2VydmljZUNyZWF0ZVJlc3BvbnNlEkMKEXRyYW5zYWN0aW9uX2VudHJ5GAEgASgLMiAuYm9va2tlZXBpbmcudjEuVHJhbnNhY3Rpb25FbnRyeUIGukgDyAEBImYKH1RyYW5zYWN0aW9uU2VydmljZVVwZGF0ZVJlcXVlc3QSQwoRdHJhbnNhY3Rpb25fZW50cnkYASABKAsyIC5ib29ra2VlcGluZy52MS5UcmFuc2FjdGlvbkVudHJ5Qga6SAPIAQEiZwogVHJhbnNhY3Rpb25TZXJ2aWNlVXBkYXRlUmVzcG9uc2USQwoRdHJhbnNhY3Rpb25fZW50cnkYASABKAsyIC5ib29ra2VlcGluZy52MS5UcmFuc2FjdGlvbkVudHJ5Qga6SAPIAQEiNQofVHJhbnNhY3Rpb25TZXJ2aWNlRGVsZXRlUmVxdWVzdBISCgJpZBgBIAEoA0IGukgDyAEBIiIKIFRyYW5zYWN0aW9uU2VydmljZURlbGV0ZVJlc3BvbnNlMtADChJUcmFuc2FjdGlvblNlcnZpY2USbQoGR2V0QWxsEi8uYm9va2tlZXBpbmcudjEuVHJhbnNhY3Rpb25TZXJ2aWNlR2V0QWxsUmVxdWVzdBowLmJvb2trZWVwaW5nLnYxLlRyYW5zYWN0aW9uU2VydmljZUdldEFsbFJlc3BvbnNlIgASbQoGQ3JlYXRlEi8uYm9va2tlZXBpbmcudjEuVHJhbnNhY3Rpb25TZXJ2aWNlQ3JlYXRlUmVxdWVzdBowLmJvb2trZWVwaW5nLnYxLlRyYW5zYWN0aW9uU2VydmljZUNyZWF0ZVJlc3BvbnNlIgASbQoGVXBkYXRlEi8uYm9va2tlZXBpbmcudjEuVHJhbnNhY3Rpb25TZXJ2aWNlVXBkYXRlUmVxdWVzdBowLmJvb2trZWVwaW5nLnYxLlRyYW5zYWN0aW9uU2VydmljZVVwZGF0ZVJlc3BvbnNlIgASbQoGRGVsZXRlEi8uYm9va2tlZXBpbmcudjEuVHJhbnNhY3Rpb25TZXJ2aWNlRGVsZXRlUmVxdWVzdBowLmJvb2trZWVwaW5nLnYxLlRyYW5zYWN0aW9uU2VydmljZURlbGV0ZVJlc3BvbnNlIgBiBnByb3RvMw", [file_bookkeeping_v1_common, file_buf_validate_validate, file_google_protobuf_timestamp]);
+export const file_bookkeeping_v1_transaction: GenFile =
+	/*@__PURE__*/
+	fileDesc(
+		"CiBib29ra2VlcGluZy92MS90cmFuc2FjdGlvbi5wcm90bxIOYm9va2tlZXBpbmcudjEiIQofVHJhbnNhY3Rpb25TZXJ2aWNlR2V0QWxsUmVxdWVzdCJnCiBUcmFuc2FjdGlvblNlcnZpY2VHZXRBbGxSZXNwb25zZRJDChF0cmFuc2FjdGlvbl9lbnRyeRgBIAMoCzIgLmJvb2trZWVwaW5nLnYxLlRyYW5zYWN0aW9uRW50cnlCBrpIA8gBASKDAQofVHJhbnNhY3Rpb25TZXJ2aWNlQ3JlYXRlUmVxdWVzdBIwCgR0aW1lGAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEIGukgDyAEBEi4KB2VudHJpZXMYAiADKAsyFS5ib29ra2VlcGluZy52MS5FbnRyeUIGukgDyAEBImcKIFRyYW5zYWN0aW9uU2VydmljZUNyZWF0ZVJlc3BvbnNlEkMKEXRyYW5zYWN0aW9uX2VudHJ5GAEgASgLMiAuYm9va2tlZXBpbmcudjEuVHJhbnNhY3Rpb25FbnRyeUIGukgDyAEBImYKH1RyYW5zYWN0aW9uU2VydmljZVVwZGF0ZVJlcXVlc3QSQwoRdHJhbnNhY3Rpb25fZW50cnkYASABKAsyIC5ib29ra2VlcGluZy52MS5UcmFuc2FjdGlvbkVudHJ5Qga6SAPIAQEiZwogVHJhbnNhY3Rpb25TZXJ2aWNlVXBkYXRlUmVzcG9uc2USQwoRdHJhbnNhY3Rpb25fZW50cnkYASABKAsyIC5ib29ra2VlcGluZy52MS5UcmFuc2FjdGlvbkVudHJ5Qga6SAPIAQEiNQofVHJhbnNhY3Rpb25TZXJ2aWNlRGVsZXRlUmVxdWVzdBISCgJpZBgBIAEoA0IGukgDyAEBIiIKIFRyYW5zYWN0aW9uU2VydmljZURlbGV0ZVJlc3BvbnNlMtADChJUcmFuc2FjdGlvblNlcnZpY2USbQoGR2V0QWxsEi8uYm9va2tlZXBpbmcudjEuVHJhbnNhY3Rpb25TZXJ2aWNlR2V0QWxsUmVxdWVzdBowLmJvb2trZWVwaW5nLnYxLlRyYW5zYWN0aW9uU2VydmljZUdldEFsbFJlc3BvbnNlIgASbQoGQ3JlYXRlEi8uYm9va2tlZXBpbmcudjEuVHJhbnNhY3Rpb25TZXJ2aWNlQ3JlYXRlUmVxdWVzdBowLmJvb2trZWVwaW5nLnYxLlRyYW5zYWN0aW9uU2VydmljZUNyZWF0ZVJlc3BvbnNlIgASbQoGVXBkYXRlEi8uYm9va2tlZXBpbmcudjEuVHJhbnNhY3Rpb25TZXJ2aWNlVXBkYXRlUmVxdWVzdBowLmJvb2trZWVwaW5nLnYxLlRyYW5zYWN0aW9uU2VydmljZVVwZGF0ZVJlc3BvbnNlIgASbQoGRGVsZXRlEi8uYm9va2tlZXBpbmcudjEuVHJhbnNhY3Rpb25TZXJ2aWNlRGVsZXRlUmVxdWVzdBowLmJvb2trZWVwaW5nLnYxLlRyYW5zYWN0aW9uU2VydmljZURlbGV0ZVJlc3BvbnNlIgBiBnByb3RvMw",
+		[file_bookkeeping_v1_common, file_buf_validate_validate, file_google_protobuf_timestamp]
+	);
 
 /**
  * @generated from message bookkeeping.v1.TransactionServiceGetAllRequest
  */
-export type TransactionServiceGetAllRequest = Message<"bookkeeping.v1.TransactionServiceGetAllRequest"> & {
-};
+export type TransactionServiceGetAllRequest =
+	Message<"bookkeeping.v1.TransactionServiceGetAllRequest"> & {};
 
 /**
  * Describes the message bookkeeping.v1.TransactionServiceGetAllRequest.
  * Use `create(TransactionServiceGetAllRequestSchema)` to create a new message.
  */
-export const TransactionServiceGetAllRequestSchema: GenMessage<TransactionServiceGetAllRequest> = /*@__PURE__*/
-  messageDesc(file_bookkeeping_v1_transaction, 0);
+export const TransactionServiceGetAllRequestSchema: GenMessage<TransactionServiceGetAllRequest> =
+	/*@__PURE__*/
+	messageDesc(file_bookkeeping_v1_transaction, 0);
 
 /**
  * @generated from message bookkeeping.v1.TransactionServiceGetAllResponse
  */
-export type TransactionServiceGetAllResponse = Message<"bookkeeping.v1.TransactionServiceGetAllResponse"> & {
-  /**
-   * @generated from field: repeated bookkeeping.v1.TransactionEntry transaction_entry = 1;
-   */
-  transactionEntry: TransactionEntry[];
-};
+export type TransactionServiceGetAllResponse =
+	Message<"bookkeeping.v1.TransactionServiceGetAllResponse"> & {
+		/**
+		 * @generated from field: repeated bookkeeping.v1.TransactionEntry transaction_entry = 1;
+		 */
+		transactionEntry: TransactionEntry[];
+	};
 
 /**
  * Describes the message bookkeeping.v1.TransactionServiceGetAllResponse.
  * Use `create(TransactionServiceGetAllResponseSchema)` to create a new message.
  */
-export const TransactionServiceGetAllResponseSchema: GenMessage<TransactionServiceGetAllResponse> = /*@__PURE__*/
-  messageDesc(file_bookkeeping_v1_transaction, 1);
+export const TransactionServiceGetAllResponseSchema: GenMessage<TransactionServiceGetAllResponse> =
+	/*@__PURE__*/
+	messageDesc(file_bookkeeping_v1_transaction, 1);
 
 /**
  * @generated from message bookkeeping.v1.TransactionServiceCreateRequest
  */
-export type TransactionServiceCreateRequest = Message<"bookkeeping.v1.TransactionServiceCreateRequest"> & {
-  /**
-   * @generated from field: google.protobuf.Timestamp time = 1;
-   */
-  time?: Timestamp | undefined;
+export type TransactionServiceCreateRequest =
+	Message<"bookkeeping.v1.TransactionServiceCreateRequest"> & {
+		/**
+		 * @generated from field: google.protobuf.Timestamp time = 1;
+		 */
+		time?: Timestamp | undefined;
 
-  /**
-   * @generated from field: repeated bookkeeping.v1.Entry entries = 2;
-   */
-  entries: Entry[];
-};
+		/**
+		 * @generated from field: repeated bookkeeping.v1.Entry entries = 2;
+		 */
+		entries: Entry[];
+	};
 
 /**
  * Describes the message bookkeeping.v1.TransactionServiceCreateRequest.
  * Use `create(TransactionServiceCreateRequestSchema)` to create a new message.
  */
-export const TransactionServiceCreateRequestSchema: GenMessage<TransactionServiceCreateRequest> = /*@__PURE__*/
-  messageDesc(file_bookkeeping_v1_transaction, 2);
+export const TransactionServiceCreateRequestSchema: GenMessage<TransactionServiceCreateRequest> =
+	/*@__PURE__*/
+	messageDesc(file_bookkeeping_v1_transaction, 2);
 
 /**
  * @generated from message bookkeeping.v1.TransactionServiceCreateResponse
  */
-export type TransactionServiceCreateResponse = Message<"bookkeeping.v1.TransactionServiceCreateResponse"> & {
-  /**
-   * @generated from field: bookkeeping.v1.TransactionEntry transaction_entry = 1;
-   */
-  transactionEntry?: TransactionEntry | undefined;
-};
+export type TransactionServiceCreateResponse =
+	Message<"bookkeeping.v1.TransactionServiceCreateResponse"> & {
+		/**
+		 * @generated from field: bookkeeping.v1.TransactionEntry transaction_entry = 1;
+		 */
+		transactionEntry?: TransactionEntry | undefined;
+	};
 
 /**
  * Describes the message bookkeeping.v1.TransactionServiceCreateResponse.
  * Use `create(TransactionServiceCreateResponseSchema)` to create a new message.
  */
-export const TransactionServiceCreateResponseSchema: GenMessage<TransactionServiceCreateResponse> = /*@__PURE__*/
-  messageDesc(file_bookkeeping_v1_transaction, 3);
+export const TransactionServiceCreateResponseSchema: GenMessage<TransactionServiceCreateResponse> =
+	/*@__PURE__*/
+	messageDesc(file_bookkeeping_v1_transaction, 3);
 
 /**
  * @generated from message bookkeeping.v1.TransactionServiceUpdateRequest
  */
-export type TransactionServiceUpdateRequest = Message<"bookkeeping.v1.TransactionServiceUpdateRequest"> & {
-  /**
-   * @generated from field: bookkeeping.v1.TransactionEntry transaction_entry = 1;
-   */
-  transactionEntry?: TransactionEntry | undefined;
-};
+export type TransactionServiceUpdateRequest =
+	Message<"bookkeeping.v1.TransactionServiceUpdateRequest"> & {
+		/**
+		 * @generated from field: bookkeeping.v1.TransactionEntry transaction_entry = 1;
+		 */
+		transactionEntry?: TransactionEntry | undefined;
+	};
 
 /**
  * Describes the message bookkeeping.v1.TransactionServiceUpdateRequest.
  * Use `create(TransactionServiceUpdateRequestSchema)` to create a new message.
  */
-export const TransactionServiceUpdateRequestSchema: GenMessage<TransactionServiceUpdateRequest> = /*@__PURE__*/
-  messageDesc(file_bookkeeping_v1_transaction, 4);
+export const TransactionServiceUpdateRequestSchema: GenMessage<TransactionServiceUpdateRequest> =
+	/*@__PURE__*/
+	messageDesc(file_bookkeeping_v1_transaction, 4);
 
 /**
  * @generated from message bookkeeping.v1.TransactionServiceUpdateResponse
  */
-export type TransactionServiceUpdateResponse = Message<"bookkeeping.v1.TransactionServiceUpdateResponse"> & {
-  /**
-   * @generated from field: bookkeeping.v1.TransactionEntry transaction_entry = 1;
-   */
-  transactionEntry?: TransactionEntry | undefined;
-};
+export type TransactionServiceUpdateResponse =
+	Message<"bookkeeping.v1.TransactionServiceUpdateResponse"> & {
+		/**
+		 * @generated from field: bookkeeping.v1.TransactionEntry transaction_entry = 1;
+		 */
+		transactionEntry?: TransactionEntry | undefined;
+	};
 
 /**
  * Describes the message bookkeeping.v1.TransactionServiceUpdateResponse.
  * Use `create(TransactionServiceUpdateResponseSchema)` to create a new message.
  */
-export const TransactionServiceUpdateResponseSchema: GenMessage<TransactionServiceUpdateResponse> = /*@__PURE__*/
-  messageDesc(file_bookkeeping_v1_transaction, 5);
+export const TransactionServiceUpdateResponseSchema: GenMessage<TransactionServiceUpdateResponse> =
+	/*@__PURE__*/
+	messageDesc(file_bookkeeping_v1_transaction, 5);
 
 /**
  * @generated from message bookkeeping.v1.TransactionServiceDeleteRequest
  */
-export type TransactionServiceDeleteRequest = Message<"bookkeeping.v1.TransactionServiceDeleteRequest"> & {
-  /**
-   * @generated from field: int64 id = 1;
-   */
-  id: bigint;
-};
+export type TransactionServiceDeleteRequest =
+	Message<"bookkeeping.v1.TransactionServiceDeleteRequest"> & {
+		/**
+		 * @generated from field: int64 id = 1;
+		 */
+		id: bigint;
+	};
 
 /**
  * Describes the message bookkeeping.v1.TransactionServiceDeleteRequest.
  * Use `create(TransactionServiceDeleteRequestSchema)` to create a new message.
  */
-export const TransactionServiceDeleteRequestSchema: GenMessage<TransactionServiceDeleteRequest> = /*@__PURE__*/
-  messageDesc(file_bookkeeping_v1_transaction, 6);
+export const TransactionServiceDeleteRequestSchema: GenMessage<TransactionServiceDeleteRequest> =
+	/*@__PURE__*/
+	messageDesc(file_bookkeeping_v1_transaction, 6);
 
 /**
  * @generated from message bookkeeping.v1.TransactionServiceDeleteResponse
  */
-export type TransactionServiceDeleteResponse = Message<"bookkeeping.v1.TransactionServiceDeleteResponse"> & {
-};
+export type TransactionServiceDeleteResponse =
+	Message<"bookkeeping.v1.TransactionServiceDeleteResponse"> & {};
 
 /**
  * Describes the message bookkeeping.v1.TransactionServiceDeleteResponse.
  * Use `create(TransactionServiceDeleteResponseSchema)` to create a new message.
  */
-export const TransactionServiceDeleteResponseSchema: GenMessage<TransactionServiceDeleteResponse> = /*@__PURE__*/
-  messageDesc(file_bookkeeping_v1_transaction, 7);
+export const TransactionServiceDeleteResponseSchema: GenMessage<TransactionServiceDeleteResponse> =
+	/*@__PURE__*/
+	messageDesc(file_bookkeeping_v1_transaction, 7);
 
 /**
  * @generated from service bookkeeping.v1.TransactionService
  */
 export const TransactionService: GenService<{
-  /**
-   * @generated from rpc bookkeeping.v1.TransactionService.GetAll
-   */
-  getAll: {
-    methodKind: "unary";
-    input: typeof TransactionServiceGetAllRequestSchema;
-    output: typeof TransactionServiceGetAllResponseSchema;
-  },
-  /**
-   * @generated from rpc bookkeeping.v1.TransactionService.Create
-   */
-  create: {
-    methodKind: "unary";
-    input: typeof TransactionServiceCreateRequestSchema;
-    output: typeof TransactionServiceCreateResponseSchema;
-  },
-  /**
-   * @generated from rpc bookkeeping.v1.TransactionService.Update
-   */
-  update: {
-    methodKind: "unary";
-    input: typeof TransactionServiceUpdateRequestSchema;
-    output: typeof TransactionServiceUpdateResponseSchema;
-  },
-  /**
-   * @generated from rpc bookkeeping.v1.TransactionService.Delete
-   */
-  delete: {
-    methodKind: "unary";
-    input: typeof TransactionServiceDeleteRequestSchema;
-    output: typeof TransactionServiceDeleteResponseSchema;
-  },
-}> = /*@__PURE__*/
-  serviceDesc(file_bookkeeping_v1_transaction, 0);
-
+	/**
+	 * @generated from rpc bookkeeping.v1.TransactionService.GetAll
+	 */
+	getAll: {
+		methodKind: "unary";
+		input: typeof TransactionServiceGetAllRequestSchema;
+		output: typeof TransactionServiceGetAllResponseSchema;
+	};
+	/**
+	 * @generated from rpc bookkeeping.v1.TransactionService.Create
+	 */
+	create: {
+		methodKind: "unary";
+		input: typeof TransactionServiceCreateRequestSchema;
+		output: typeof TransactionServiceCreateResponseSchema;
+	};
+	/**
+	 * @generated from rpc bookkeeping.v1.TransactionService.Update
+	 */
+	update: {
+		methodKind: "unary";
+		input: typeof TransactionServiceUpdateRequestSchema;
+		output: typeof TransactionServiceUpdateResponseSchema;
+	};
+	/**
+	 * @generated from rpc bookkeeping.v1.TransactionService.Delete
+	 */
+	delete: {
+		methodKind: "unary";
+		input: typeof TransactionServiceDeleteRequestSchema;
+		output: typeof TransactionServiceDeleteResponseSchema;
+	};
+}> = /*@__PURE__*/ serviceDesc(file_bookkeeping_v1_transaction, 0);

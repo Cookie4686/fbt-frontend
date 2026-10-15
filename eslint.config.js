@@ -1,4 +1,5 @@
 import js from "@eslint/js";
+import { loadConfig } from "@sveltejs/load-config";
 import prettier from "eslint-config-prettier";
 import perfectionist from "eslint-plugin-perfectionist";
 import svelte from "eslint-plugin-svelte";
@@ -7,7 +8,7 @@ import globals from "globals";
 import path from "node:path";
 import ts from "typescript-eslint";
 
-import svelteConfig from "./svelte.config.js";
+const svelteConfig = (await loadConfig("./", { traverse: false }))?.config;
 
 const gitignorePath = path.resolve(import.meta.dirname, ".gitignore");
 
@@ -28,8 +29,8 @@ export default defineConfig(
 			"no-undef": "off",
 			"perfectionist/sort-array-includes": "error",
 			"perfectionist/sort-imports": "error",
-			"perfectionist/sort-named-imports": "error"
-		}
+			"perfectionist/sort-named-imports": "error",
+		},
 	},
 	{
 		files: ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],
@@ -38,8 +39,8 @@ export default defineConfig(
 				projectService: true,
 				extraFileExtensions: [".svelte"],
 				parser: ts.parser,
-				svelteConfig
-			}
-		}
+				svelteConfig,
+			},
+		},
 	}
 );

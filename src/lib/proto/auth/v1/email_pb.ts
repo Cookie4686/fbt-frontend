@@ -12,102 +12,108 @@ import type { Message } from "@bufbuild/protobuf";
 /**
  * Describes the file auth/v1/email.proto.
  */
-export const file_auth_v1_email: GenFile = /*@__PURE__*/
-  fileDesc("ChNhdXRoL3YxL2VtYWlsLnByb3RvEgdhdXRoLnYxIjcKGkVtYWlsU2VydmljZVNlbmRPVFBSZXF1ZXN0EhkKBWVtYWlsGAEgASgJQgq6SAfIAQFyAmABIj4KG0VtYWlsU2VydmljZVNlbmRPVFBSZXNwb25zZRIfCg92ZXJpZmljYXRpb25faWQYASABKAlCBrpIA8gBASJWChlFbWFpbFNlcnZpY2VWZXJpZnlSZXF1ZXN0Eh8KD3ZlcmlmaWNhdGlvbl9pZBgBIAEoCUIGukgDyAEBEhgKA290cBgCIAEoCUILukgIyAEBcgOYAQYiRwoaRW1haWxTZXJ2aWNlVmVyaWZ5UmVzcG9uc2USKQoHc2Vzc2lvbhgBIAEoCzIQLmF1dGgudjEuU2Vzc2lvbkIGukgDyAEBMrsBCgxFbWFpbFNlcnZpY2USVgoHU2VuZE9UUBIjLmF1dGgudjEuRW1haWxTZXJ2aWNlU2VuZE9UUFJlcXVlc3QaJC5hdXRoLnYxLkVtYWlsU2VydmljZVNlbmRPVFBSZXNwb25zZSIAElMKBlZlcmlmeRIiLmF1dGgudjEuRW1haWxTZXJ2aWNlVmVyaWZ5UmVxdWVzdBojLmF1dGgudjEuRW1haWxTZXJ2aWNlVmVyaWZ5UmVzcG9uc2UiAGIGcHJvdG8z", [file_auth_v1_common, file_buf_validate_validate]);
+export const file_auth_v1_email: GenFile =
+	/*@__PURE__*/
+	fileDesc(
+		"ChNhdXRoL3YxL2VtYWlsLnByb3RvEgdhdXRoLnYxIjcKGkVtYWlsU2VydmljZVNlbmRPVFBSZXF1ZXN0EhkKBWVtYWlsGAEgASgJQgq6SAfIAQFyAmABIj4KG0VtYWlsU2VydmljZVNlbmRPVFBSZXNwb25zZRIfCg92ZXJpZmljYXRpb25faWQYASABKAlCBrpIA8gBASJWChlFbWFpbFNlcnZpY2VWZXJpZnlSZXF1ZXN0Eh8KD3ZlcmlmaWNhdGlvbl9pZBgBIAEoCUIGukgDyAEBEhgKA290cBgCIAEoCUILukgIyAEBcgOYAQYiRwoaRW1haWxTZXJ2aWNlVmVyaWZ5UmVzcG9uc2USKQoHc2Vzc2lvbhgBIAEoCzIQLmF1dGgudjEuU2Vzc2lvbkIGukgDyAEBMrsBCgxFbWFpbFNlcnZpY2USVgoHU2VuZE9UUBIjLmF1dGgudjEuRW1haWxTZXJ2aWNlU2VuZE9UUFJlcXVlc3QaJC5hdXRoLnYxLkVtYWlsU2VydmljZVNlbmRPVFBSZXNwb25zZSIAElMKBlZlcmlmeRIiLmF1dGgudjEuRW1haWxTZXJ2aWNlVmVyaWZ5UmVxdWVzdBojLmF1dGgudjEuRW1haWxTZXJ2aWNlVmVyaWZ5UmVzcG9uc2UiAGIGcHJvdG8z",
+		[file_auth_v1_common, file_buf_validate_validate]
+	);
 
 /**
  * @generated from message auth.v1.EmailServiceSendOTPRequest
  */
 export type EmailServiceSendOTPRequest = Message<"auth.v1.EmailServiceSendOTPRequest"> & {
-  /**
-   * @generated from field: string email = 1;
-   */
-  email: string;
+	/**
+	 * @generated from field: string email = 1;
+	 */
+	email: string;
 };
 
 /**
  * Describes the message auth.v1.EmailServiceSendOTPRequest.
  * Use `create(EmailServiceSendOTPRequestSchema)` to create a new message.
  */
-export const EmailServiceSendOTPRequestSchema: GenMessage<EmailServiceSendOTPRequest> = /*@__PURE__*/
-  messageDesc(file_auth_v1_email, 0);
+export const EmailServiceSendOTPRequestSchema: GenMessage<EmailServiceSendOTPRequest> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_email, 0);
 
 /**
  * @generated from message auth.v1.EmailServiceSendOTPResponse
  */
 export type EmailServiceSendOTPResponse = Message<"auth.v1.EmailServiceSendOTPResponse"> & {
-  /**
-   * @generated from field: string verification_id = 1;
-   */
-  verificationId: string;
+	/**
+	 * @generated from field: string verification_id = 1;
+	 */
+	verificationId: string;
 };
 
 /**
  * Describes the message auth.v1.EmailServiceSendOTPResponse.
  * Use `create(EmailServiceSendOTPResponseSchema)` to create a new message.
  */
-export const EmailServiceSendOTPResponseSchema: GenMessage<EmailServiceSendOTPResponse> = /*@__PURE__*/
-  messageDesc(file_auth_v1_email, 1);
+export const EmailServiceSendOTPResponseSchema: GenMessage<EmailServiceSendOTPResponse> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_email, 1);
 
 /**
  * @generated from message auth.v1.EmailServiceVerifyRequest
  */
 export type EmailServiceVerifyRequest = Message<"auth.v1.EmailServiceVerifyRequest"> & {
-  /**
-   * @generated from field: string verification_id = 1;
-   */
-  verificationId: string;
+	/**
+	 * @generated from field: string verification_id = 1;
+	 */
+	verificationId: string;
 
-  /**
-   * @generated from field: string otp = 2;
-   */
-  otp: string;
+	/**
+	 * @generated from field: string otp = 2;
+	 */
+	otp: string;
 };
 
 /**
  * Describes the message auth.v1.EmailServiceVerifyRequest.
  * Use `create(EmailServiceVerifyRequestSchema)` to create a new message.
  */
-export const EmailServiceVerifyRequestSchema: GenMessage<EmailServiceVerifyRequest> = /*@__PURE__*/
-  messageDesc(file_auth_v1_email, 2);
+export const EmailServiceVerifyRequestSchema: GenMessage<EmailServiceVerifyRequest> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_email, 2);
 
 /**
  * @generated from message auth.v1.EmailServiceVerifyResponse
  */
 export type EmailServiceVerifyResponse = Message<"auth.v1.EmailServiceVerifyResponse"> & {
-  /**
-   * @generated from field: auth.v1.Session session = 1;
-   */
-  session?: Session | undefined;
+	/**
+	 * @generated from field: auth.v1.Session session = 1;
+	 */
+	session?: Session | undefined;
 };
 
 /**
  * Describes the message auth.v1.EmailServiceVerifyResponse.
  * Use `create(EmailServiceVerifyResponseSchema)` to create a new message.
  */
-export const EmailServiceVerifyResponseSchema: GenMessage<EmailServiceVerifyResponse> = /*@__PURE__*/
-  messageDesc(file_auth_v1_email, 3);
+export const EmailServiceVerifyResponseSchema: GenMessage<EmailServiceVerifyResponse> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_email, 3);
 
 /**
  * @generated from service auth.v1.EmailService
  */
 export const EmailService: GenService<{
-  /**
-   * @generated from rpc auth.v1.EmailService.SendOTP
-   */
-  sendOTP: {
-    methodKind: "unary";
-    input: typeof EmailServiceSendOTPRequestSchema;
-    output: typeof EmailServiceSendOTPResponseSchema;
-  },
-  /**
-   * @generated from rpc auth.v1.EmailService.Verify
-   */
-  verify: {
-    methodKind: "unary";
-    input: typeof EmailServiceVerifyRequestSchema;
-    output: typeof EmailServiceVerifyResponseSchema;
-  },
-}> = /*@__PURE__*/
-  serviceDesc(file_auth_v1_email, 0);
-
+	/**
+	 * @generated from rpc auth.v1.EmailService.SendOTP
+	 */
+	sendOTP: {
+		methodKind: "unary";
+		input: typeof EmailServiceSendOTPRequestSchema;
+		output: typeof EmailServiceSendOTPResponseSchema;
+	};
+	/**
+	 * @generated from rpc auth.v1.EmailService.Verify
+	 */
+	verify: {
+		methodKind: "unary";
+		input: typeof EmailServiceVerifyRequestSchema;
+		output: typeof EmailServiceVerifyResponseSchema;
+	};
+}> = /*@__PURE__*/ serviceDesc(file_auth_v1_email, 0);

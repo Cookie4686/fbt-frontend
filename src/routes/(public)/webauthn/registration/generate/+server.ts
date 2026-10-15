@@ -1,12 +1,13 @@
 import { generateRegistrationOptions } from "@simplewebauthn/server";
 import { redirect, type RequestHandler } from "@sveltejs/kit";
-import Route from "$lib/route";
+
+import Route from "#lib/route.js";
 import {
 	type Passkey,
 	rpID,
 	rpName,
 	setCurrentRegistrationOptions,
-} from "$lib/server/auth/webauthn";
+} from "#lib/server/auth/webauthn.js";
 
 export const GET: RequestHandler = async (event) => {
 	const { user } = event.locals;

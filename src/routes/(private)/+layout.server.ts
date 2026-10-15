@@ -1,5 +1,5 @@
 // import { redirect } from "@sveltejs/kit";
-// import Route from "$lib/route";
+// import Route from "#lib/route.js";
 
 import type { LayoutServerLoad } from "./$types";
 

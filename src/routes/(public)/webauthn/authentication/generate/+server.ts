@@ -1,6 +1,7 @@
 import { generateAuthenticationOptions } from "@simplewebauthn/server";
 import { type RequestHandler } from "@sveltejs/kit";
-import { type Passkey, rpID, setCurrentAuthenticationOptions } from "$lib/server/auth/webauthn";
+
+import { type Passkey, rpID, setCurrentAuthenticationOptions } from "#lib/server/auth/webauthn.js";
 
 export const GET: RequestHandler = async (event) => {
 	const clientIP = event.getClientAddress();

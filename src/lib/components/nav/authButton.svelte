@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { Session } from "$lib/schema/auth";
-
 	import { enhance } from "$app/forms";
 	import { resolve } from "$app/paths";
-	import { Button } from "$lib/components/ui/button/index.js";
+
+	import type { Session } from "#lib/schema/auth.js";
+
+	import { Button } from "#lib/components/ui/button/index.js";
 
 	const { session }: { session?: Session | null } = $props();
 </script>
@@ -13,5 +14,5 @@
 		<Button type="submit" variant="outline">Sign out</Button>
 	</form>
 {:else}
-	<Button href={resolve("/login")} type="submit" variant="outline">Log In</Button>
+	<Button href={resolve("login")} type="submit" variant="outline">Log In</Button>
 {/if}

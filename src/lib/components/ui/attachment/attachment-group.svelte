@@ -1,0 +1,24 @@
+<script lang="ts">
+	import type { HTMLAttributes } from "svelte/elements";
+
+	import { cn, type WithElementRef } from "#lib/utils.js";
+
+	let {
+		ref = $bindable(null),
+		class: className,
+		children,
+		...restProps
+	}: WithElementRef<HTMLAttributes<HTMLDivElement>> = $props();
+</script>
+
+<div
+	bind:this={ref}
+	data-slot="attachment-group"
+	class={cn(
+		"gap-3 scroll-px-1 py-1 flex min-w-0 scroll-fade-x snap-x snap-mandatory scrollbar-none overflow-x-auto overscroll-x-contain *:data-[slot=attachment]:flex-none *:data-[slot=attachment]:snap-start",
+		className
+	)}
+	{...restProps}
+>
+	{@render children?.()}
+</div>

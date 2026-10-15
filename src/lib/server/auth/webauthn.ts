@@ -1,19 +1,21 @@
 import type {
-  AuthenticatorTransportFuture,
-  CredentialDeviceType,
-  PublicKeyCredentialCreationOptionsJSON,
+	AuthenticatorTransportFuture,
+	CredentialDeviceType,
+	PublicKeyCredentialCreationOptionsJSON,
 } from "@simplewebauthn/server";
-import type { User } from "$lib/schema/auth";
 
 import { createClient } from "@connectrpc/connect";
 import { error, type RequestEvent } from "@sveltejs/kit";
 import { RP_NAME } from "$app/env/private";
 import { FRONTEND_ADR, FRONTEND_URL } from "$app/env/public";
+
+import type { User } from "#lib/schema/auth.js";
+
 import {
-  WebAuthnService,
-  type WebAuthnServiceGetUserPasskeyRequest,
-  type WebAuthnServiceUpdatePasskeyCounterRequest,
-} from "$lib/proto/auth/v1/webauthn_pb";
+	WebAuthnService,
+	type WebAuthnServiceGetUserPasskeyRequest,
+	type WebAuthnServiceUpdatePasskeyCounterRequest,
+} from "#lib/proto/auth/v1/webauthn_pb.js";
 
 import { handleError } from "../error";
 import H from "../http-code";
@@ -32,14 +34,14 @@ import { setSessionToken } from "./session";
  * @param transports How the browser can talk with this credential's authenticator
  * */
 export interface Passkey {
-  id: Base64URLString;
-  publicKey: Uint8Array;
-  aaguid: Uint8Array;
-  userID: string;
-  counter: number;
-  deviceType: CredentialDeviceType;
-  backedUp: boolean;
-  transports?: AuthenticatorTransportFuture[];
+	id: Base64URLString;
+	publicKey: Uint8Array;
+	aaguid: Uint8Array;
+	userID: string;
+	counter: number;
+	deviceType: CredentialDeviceType;
+	backedUp: boolean;
+	transports?: AuthenticatorTransportFuture[];
 }
 
 export const rpName = RP_NAME;
@@ -47,95 +49,95 @@ export const rpID = import.meta.env.PROD ? FRONTEND_ADR : "localhost";
 export const rpOrigin = FRONTEND_URL;
 
 function redisWebAuthnRegistrationKey(user: User): string {
-  return `webauthn:registration:${user.id}`;
+	return `webauthn:registration:${user.id}`;
 }
 
 export async function getCurrentRegistrationOptions(user: User) {
-  const value = await redis.get(redisWebAuthnRegistrationKey(user));
-  return value ? (JSON.parse(value) as PublicKeyCredentialCreationOptionsJSON) : null;
+	const value = await redis.get(redisWebAuthnRegistrationKey(user));
+	return value ? (JSON.parse(value) as PublicKeyCredentialCreationOptionsJSON) : null;
 }
 
 export async function setCurrentRegistrationOptions(
-  user: User,
-  options: PublicKeyCredentialCreationOptionsJSON
+	user: User,
+	options: PublicKeyCredentialCreationOptionsJSON
 ) {
-  await redis.set(redisWebAuthnRegistrationKey(user), JSON.stringify(options));
-  await redis.expire(redisWebAuthnRegistrationKey(user), 60);
+	await redis.set(redisWebAuthnRegistrationKey(user), JSON.stringify(options));
+	await redis.expire(redisWebAuthnRegistrationKey(user), 60);
 }
 
 function redisWebAuthnAuthenticationKey(clientIP: string): string {
-  return `webauthn:authentication:${clientIP}`;
+	return `webauthn:authentication:${clientIP}`;
 }
 
 export async function getCurrentAuthenticationOptions(clientIP: string) {
-  const value = await redis.get(redisWebAuthnAuthenticationKey(clientIP));
-  return value ? (JSON.parse(value) as PublicKeyCredentialRequestOptionsJSON) : null;
+	const value = await redis.get(redisWebAuthnAuthenticationKey(clientIP));
+	return value ? (JSON.parse(value) as PublicKeyCredentialRequestOptionsJSON) : null;
 }
 
 export async function setCurrentAuthenticationOptions(
-  clientIP: string,
-  options: PublicKeyCredentialRequestOptionsJSON
+	clientIP: string,
+	options: PublicKeyCredentialRequestOptionsJSON
 ) {
-  await redis.set(redisWebAuthnAuthenticationKey(clientIP), JSON.stringify(options));
-  await redis.expire(redisWebAuthnAuthenticationKey(clientIP), 60);
+	await redis.set(redisWebAuthnAuthenticationKey(clientIP), JSON.stringify(options));
+	await redis.expire(redisWebAuthnAuthenticationKey(clientIP), 60);
 }
 
 const client = createClient(WebAuthnService, transport);
 
 export async function getUserPasskey(
-  event: RequestEvent,
-  req: RequestInput<WebAuthnServiceGetUserPasskeyRequest>
+	event: RequestEvent,
+	req: RequestInput<WebAuthnServiceGetUserPasskeyRequest>
 ): Promise<Passkey | undefined> {
-  try {
-    const response = await client.getUserPasskey(req);
+	try {
+		const response = await client.getUserPasskey(req);
 
-    return response.credential ? ProtoToPasskey(response.credential) : undefined;
-  } catch (error) {
-    handleError(error);
-  }
+		return response.credential ? ProtoToPasskey(response.credential) : undefined;
+	} catch (error) {
+		handleError(error);
+	}
 }
 
 export async function createUserPasskey(
-  event: RequestEvent,
-  passkey: Passkey
+	event: RequestEvent,
+	passkey: Passkey
 ): Promise<Passkey | undefined> {
-  try {
-    const { session } = event.locals;
-    if (!session) return error(H.C_401_UNAUTHORIZED);
+	try {
+		const { session } = event.locals;
+		if (!session) return error(H.C_401_UNAUTHORIZED);
 
-    const response = await client.createUserPasskey(
-      {
-        credential: {
-          rpId: rpID,
-          credentialId: passkey.id,
-          userId: passkey.userID,
-          publicKey: passkey.publicKey,
-          aaguid: passkey.aaguid,
-          counter: BigInt(passkey.counter),
-          transports: passkey.transports,
-          deviceType: passkey.deviceType,
-          backedUp: passkey.backedUp,
-        },
-      },
-      withTokenHeader(session.id)
-    );
+		const response = await client.createUserPasskey(
+			{
+				credential: {
+					rpId: rpID,
+					credentialId: passkey.id,
+					userId: passkey.userID,
+					publicKey: passkey.publicKey,
+					aaguid: passkey.aaguid,
+					counter: BigInt(passkey.counter),
+					transports: passkey.transports,
+					deviceType: passkey.deviceType,
+					backedUp: passkey.backedUp,
+				},
+			},
+			withTokenHeader(session.id)
+		);
 
-    return response.credential ? ProtoToPasskey(response.credential) : undefined;
-  } catch (error) {
-    handleError(error);
-  }
+		return response.credential ? ProtoToPasskey(response.credential) : undefined;
+	} catch (error) {
+		handleError(error);
+	}
 }
 
 export async function updatePasskeyCounter(
-  event: RequestEvent,
-  req: RequestInput<WebAuthnServiceUpdatePasskeyCounterRequest>
+	event: RequestEvent,
+	req: RequestInput<WebAuthnServiceUpdatePasskeyCounterRequest>
 ): Promise<void> {
-  try {
-    const response = await client.updatePasskeyCounter(req);
-    if (!response.session) error(500);
+	try {
+		const response = await client.updatePasskeyCounter(req);
+		if (!response.session) error(500);
 
-    setSessionToken(event, response.session.id);
-  } catch (error) {
-    handleError(error);
-  }
+		setSessionToken(event, response.session.id);
+	} catch (error) {
+		handleError(error);
+	}
 }

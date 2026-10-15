@@ -1,4 +1,4 @@
-import { createOAuthRedirect } from "$lib/server/auth/oauth";
+import { createOAuthRedirect } from "#lib/server/auth/oauth.js";
 
 import type { RequestEvent } from "./$types";
 

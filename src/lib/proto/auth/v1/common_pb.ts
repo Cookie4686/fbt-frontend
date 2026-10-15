@@ -13,132 +13,138 @@ import type { Message } from "@bufbuild/protobuf";
 /**
  * Describes the file auth/v1/common.proto.
  */
-export const file_auth_v1_common: GenFile = /*@__PURE__*/
-  fileDesc("ChRhdXRoL3YxL2NvbW1vbi5wcm90bxIHYXV0aC52MSKLAQoHU2Vzc2lvbhISCgJpZBgBIAEoCUIGukgDyAEBEhcKB3VzZXJfaWQYAiABKAlCBrpIA8gBARIbChN0d29fZmFjdG9yX3ZlcmlmaWVkGAMgASgIEjYKCmV4cGlyZXNfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wQga6SAPIAQEihwEKBFVzZXISEgoCaWQYASABKAlCBrpIA8gBARIeCgh1c2VybmFtZRgCIAEoCUIMukgJyAEBcgSAtRgBEhkKBWVtYWlsGAMgASgJQgq6SAfIAQFyAmABEhYKDmVtYWlsX3ZlcmlmaWVkGAQgASgIEhgKEHBhc3N3b3JkX2VuYWJsZWQYBSABKAgivAEKEldlYkF1dGhuQ3JlZGVudGlhbBINCgVycF9pZBgBIAEoCRIPCgd1c2VyX2lkGAIgASgJEhUKDWNyZWRlbnRpYWxfaWQYAyABKAkSEgoKcHVibGljX2tleRgEIAEoDBIPCgdjb3VudGVyGAUgASgDEg4KBmFhZ3VpZBgGIAEoDBITCgtkZXZpY2VfdHlwZRgHIAEoCRISCgp0cmFuc3BvcnRzGAggAygJEhEKCWJhY2tlZF91cBgJIAEoCGIGcHJvdG8z", [file_auth_v1_predefined_string_rules, file_buf_validate_validate, file_google_protobuf_timestamp]);
+export const file_auth_v1_common: GenFile =
+	/*@__PURE__*/
+	fileDesc(
+		"ChRhdXRoL3YxL2NvbW1vbi5wcm90bxIHYXV0aC52MSKLAQoHU2Vzc2lvbhISCgJpZBgBIAEoCUIGukgDyAEBEhcKB3VzZXJfaWQYAiABKAlCBrpIA8gBARIbChN0d29fZmFjdG9yX3ZlcmlmaWVkGAMgASgIEjYKCmV4cGlyZXNfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wQga6SAPIAQEihwEKBFVzZXISEgoCaWQYASABKAlCBrpIA8gBARIeCgh1c2VybmFtZRgCIAEoCUIMukgJyAEBcgSAtRgBEhkKBWVtYWlsGAMgASgJQgq6SAfIAQFyAmABEhYKDmVtYWlsX3ZlcmlmaWVkGAQgASgIEhgKEHBhc3N3b3JkX2VuYWJsZWQYBSABKAgivAEKEldlYkF1dGhuQ3JlZGVudGlhbBINCgVycF9pZBgBIAEoCRIPCgd1c2VyX2lkGAIgASgJEhUKDWNyZWRlbnRpYWxfaWQYAyABKAkSEgoKcHVibGljX2tleRgEIAEoDBIPCgdjb3VudGVyGAUgASgDEg4KBmFhZ3VpZBgGIAEoDBITCgtkZXZpY2VfdHlwZRgHIAEoCRISCgp0cmFuc3BvcnRzGAggAygJEhEKCWJhY2tlZF91cBgJIAEoCGIGcHJvdG8z",
+		[
+			file_auth_v1_predefined_string_rules,
+			file_buf_validate_validate,
+			file_google_protobuf_timestamp,
+		]
+	);
 
 /**
  * @generated from message auth.v1.Session
  */
 export type Session = Message<"auth.v1.Session"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+	/**
+	 * @generated from field: string id = 1;
+	 */
+	id: string;
 
-  /**
-   * @generated from field: string user_id = 2;
-   */
-  userId: string;
+	/**
+	 * @generated from field: string user_id = 2;
+	 */
+	userId: string;
 
-  /**
-   * @generated from field: bool two_factor_verified = 3;
-   */
-  twoFactorVerified: boolean;
+	/**
+	 * @generated from field: bool two_factor_verified = 3;
+	 */
+	twoFactorVerified: boolean;
 
-  /**
-   * @generated from field: google.protobuf.Timestamp expires_at = 4;
-   */
-  expiresAt?: Timestamp | undefined;
+	/**
+	 * @generated from field: google.protobuf.Timestamp expires_at = 4;
+	 */
+	expiresAt?: Timestamp | undefined;
 };
 
 /**
  * Describes the message auth.v1.Session.
  * Use `create(SessionSchema)` to create a new message.
  */
-export const SessionSchema: GenMessage<Session> = /*@__PURE__*/
-  messageDesc(file_auth_v1_common, 0);
+export const SessionSchema: GenMessage<Session> = /*@__PURE__*/ messageDesc(file_auth_v1_common, 0);
 
 /**
  * @generated from message auth.v1.User
  */
 export type User = Message<"auth.v1.User"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+	/**
+	 * @generated from field: string id = 1;
+	 */
+	id: string;
 
-  /**
-   * @generated from field: string username = 2;
-   */
-  username: string;
+	/**
+	 * @generated from field: string username = 2;
+	 */
+	username: string;
 
-  /**
-   * @generated from field: string email = 3;
-   */
-  email: string;
+	/**
+	 * @generated from field: string email = 3;
+	 */
+	email: string;
 
-  /**
-   * @generated from field: bool email_verified = 4;
-   */
-  emailVerified: boolean;
+	/**
+	 * @generated from field: bool email_verified = 4;
+	 */
+	emailVerified: boolean;
 
-  /**
-   * @generated from field: bool password_enabled = 5;
-   */
-  passwordEnabled: boolean;
+	/**
+	 * @generated from field: bool password_enabled = 5;
+	 */
+	passwordEnabled: boolean;
 };
 
 /**
  * Describes the message auth.v1.User.
  * Use `create(UserSchema)` to create a new message.
  */
-export const UserSchema: GenMessage<User> = /*@__PURE__*/
-  messageDesc(file_auth_v1_common, 1);
+export const UserSchema: GenMessage<User> = /*@__PURE__*/ messageDesc(file_auth_v1_common, 1);
 
 /**
  * @generated from message auth.v1.WebAuthnCredential
  */
 export type WebAuthnCredential = Message<"auth.v1.WebAuthnCredential"> & {
-  /**
-   * @generated from field: string rp_id = 1;
-   */
-  rpId: string;
+	/**
+	 * @generated from field: string rp_id = 1;
+	 */
+	rpId: string;
 
-  /**
-   * @generated from field: string user_id = 2;
-   */
-  userId: string;
+	/**
+	 * @generated from field: string user_id = 2;
+	 */
+	userId: string;
 
-  /**
-   * @generated from field: string credential_id = 3;
-   */
-  credentialId: string;
+	/**
+	 * @generated from field: string credential_id = 3;
+	 */
+	credentialId: string;
 
-  /**
-   * @generated from field: bytes public_key = 4;
-   */
-  publicKey: Uint8Array;
+	/**
+	 * @generated from field: bytes public_key = 4;
+	 */
+	publicKey: Uint8Array;
 
-  /**
-   * @generated from field: int64 counter = 5;
-   */
-  counter: bigint;
+	/**
+	 * @generated from field: int64 counter = 5;
+	 */
+	counter: bigint;
 
-  /**
-   * @generated from field: bytes aaguid = 6;
-   */
-  aaguid: Uint8Array;
+	/**
+	 * @generated from field: bytes aaguid = 6;
+	 */
+	aaguid: Uint8Array;
 
-  /**
-   * @generated from field: string device_type = 7;
-   */
-  deviceType: string;
+	/**
+	 * @generated from field: string device_type = 7;
+	 */
+	deviceType: string;
 
-  /**
-   * @generated from field: repeated string transports = 8;
-   */
-  transports: string[];
+	/**
+	 * @generated from field: repeated string transports = 8;
+	 */
+	transports: string[];
 
-  /**
-   * @generated from field: bool backed_up = 9;
-   */
-  backedUp: boolean;
+	/**
+	 * @generated from field: bool backed_up = 9;
+	 */
+	backedUp: boolean;
 };
 
 /**
  * Describes the message auth.v1.WebAuthnCredential.
  * Use `create(WebAuthnCredentialSchema)` to create a new message.
  */
-export const WebAuthnCredentialSchema: GenMessage<WebAuthnCredential> = /*@__PURE__*/
-  messageDesc(file_auth_v1_common, 2);
-
+export const WebAuthnCredentialSchema: GenMessage<WebAuthnCredential> =
+	/*@__PURE__*/
+	messageDesc(file_auth_v1_common, 2);

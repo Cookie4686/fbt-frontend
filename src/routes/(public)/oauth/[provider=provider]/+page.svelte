@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Formsnap from "$lib/components/formsnap.svelte";
-	import { oauthSchema } from "$lib/schema/auth";
 	import { superForm } from "sveltekit-superforms";
 	import { zod4Client } from "sveltekit-superforms/adapters";
+
+	import Formsnap from "#lib/components/formsnap.svelte";
+	import { oauthSchema } from "#lib/schema/auth.js";
 
 	import type { PageServerData } from "./$types";
 

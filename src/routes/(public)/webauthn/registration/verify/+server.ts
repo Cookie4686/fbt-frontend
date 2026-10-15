@@ -1,19 +1,20 @@
-import type { User } from "$lib/schema/auth";
-
 import {
 	type RegistrationResponseJSON,
 	type VerifiedRegistrationResponse,
 	verifyRegistrationResponse,
 } from "@simplewebauthn/server";
 import { error, redirect, type RequestEvent, type RequestHandler } from "@sveltejs/kit";
-import Route from "$lib/route";
+
+import type { User } from "#lib/schema/auth.js";
+
+import Route from "#lib/route.js";
 import {
 	createUserPasskey,
 	getCurrentRegistrationOptions,
 	type Passkey,
 	rpID,
 	rpOrigin,
-} from "$lib/server/auth/webauthn";
+} from "#lib/server/auth/webauthn.js";
 
 export const POST: RequestHandler = async (event) => {
 	const { user } = event.locals;

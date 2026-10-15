@@ -1,6 +1,7 @@
 import { redirect } from "@sveltejs/kit";
-import Route from "$lib/route";
-import { getUserMFA } from "$lib/server/auth/mfa";
+
+import Route from "#lib/route.js";
+import { getUserMFA } from "#lib/server/auth/mfa.js";
 
 import type { PageServerLoad } from "./$types";
 

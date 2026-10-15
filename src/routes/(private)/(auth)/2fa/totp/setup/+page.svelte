@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Formsnap from "$lib/components/formsnap.svelte";
-	import { totpSetupFormSchema } from "$lib/schema/mfa";
 	import { superForm } from "sveltekit-superforms";
 	import { zod4Client } from "sveltekit-superforms/adapters";
+
+	import Formsnap from "#lib/components/formsnap.svelte";
+	import { totpSetupFormSchema } from "#lib/schema/mfa.js";
 
 	import type { PageServerData } from "./$types";
 	const { data }: { data: PageServerData } = $props();

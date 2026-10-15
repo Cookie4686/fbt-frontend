@@ -1,8 +1,9 @@
 import { type Actions } from "@sveltejs/kit";
 
+import { createDatabase } from "#lib/server/db/database.js";
+import { getAllCategory } from "#lib/server/db/repo/bookkeeping/category.js";
+
 import type { PageServerLoad } from "./$types";
-import { getAllCategory } from "$lib/server/db/repo/bookkeeping/category";
-import { createDatabase } from "$lib/server/db/database";
 
 export const load: PageServerLoad = async () => {
 	const db = createDatabase();

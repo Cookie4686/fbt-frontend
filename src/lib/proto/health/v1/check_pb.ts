@@ -10,56 +10,59 @@ import type { Message } from "@bufbuild/protobuf";
 /**
  * Describes the file health/v1/check.proto.
  */
-export const file_health_v1_check: GenFile = /*@__PURE__*/
-  fileDesc("ChVoZWFsdGgvdjEvY2hlY2sucHJvdG8SCWhlYWx0aC52MSIcChpIZWFsdGhTZXJ2aWNlU3RhdHVzUmVxdWVzdCJTChtIZWFsdGhTZXJ2aWNlU3RhdHVzUmVzcG9uc2USFAoMaXNfc2VydmVyX3VwGAEgASgIEh4KDmlzX2RhdGFiYXNlX3VwGAIgASgIQga6SAPIAQEybQoNSGVhbHRoU2VydmljZRJcCgZTdGF0dXMSJS5oZWFsdGgudjEuSGVhbHRoU2VydmljZVN0YXR1c1JlcXVlc3QaJi5oZWFsdGgudjEuSGVhbHRoU2VydmljZVN0YXR1c1Jlc3BvbnNlIgOQAgFiBnByb3RvMw", [file_buf_validate_validate]);
+export const file_health_v1_check: GenFile =
+	/*@__PURE__*/
+	fileDesc(
+		"ChVoZWFsdGgvdjEvY2hlY2sucHJvdG8SCWhlYWx0aC52MSIcChpIZWFsdGhTZXJ2aWNlU3RhdHVzUmVxdWVzdCJTChtIZWFsdGhTZXJ2aWNlU3RhdHVzUmVzcG9uc2USFAoMaXNfc2VydmVyX3VwGAEgASgIEh4KDmlzX2RhdGFiYXNlX3VwGAIgASgIQga6SAPIAQEybQoNSGVhbHRoU2VydmljZRJcCgZTdGF0dXMSJS5oZWFsdGgudjEuSGVhbHRoU2VydmljZVN0YXR1c1JlcXVlc3QaJi5oZWFsdGgudjEuSGVhbHRoU2VydmljZVN0YXR1c1Jlc3BvbnNlIgOQAgFiBnByb3RvMw",
+		[file_buf_validate_validate]
+	);
 
 /**
  * @generated from message health.v1.HealthServiceStatusRequest
  */
-export type HealthServiceStatusRequest = Message<"health.v1.HealthServiceStatusRequest"> & {
-};
+export type HealthServiceStatusRequest = Message<"health.v1.HealthServiceStatusRequest"> & {};
 
 /**
  * Describes the message health.v1.HealthServiceStatusRequest.
  * Use `create(HealthServiceStatusRequestSchema)` to create a new message.
  */
-export const HealthServiceStatusRequestSchema: GenMessage<HealthServiceStatusRequest> = /*@__PURE__*/
-  messageDesc(file_health_v1_check, 0);
+export const HealthServiceStatusRequestSchema: GenMessage<HealthServiceStatusRequest> =
+	/*@__PURE__*/
+	messageDesc(file_health_v1_check, 0);
 
 /**
  * @generated from message health.v1.HealthServiceStatusResponse
  */
 export type HealthServiceStatusResponse = Message<"health.v1.HealthServiceStatusResponse"> & {
-  /**
-   * @generated from field: bool is_server_up = 1;
-   */
-  isServerUp: boolean;
+	/**
+	 * @generated from field: bool is_server_up = 1;
+	 */
+	isServerUp: boolean;
 
-  /**
-   * @generated from field: bool is_database_up = 2;
-   */
-  isDatabaseUp: boolean;
+	/**
+	 * @generated from field: bool is_database_up = 2;
+	 */
+	isDatabaseUp: boolean;
 };
 
 /**
  * Describes the message health.v1.HealthServiceStatusResponse.
  * Use `create(HealthServiceStatusResponseSchema)` to create a new message.
  */
-export const HealthServiceStatusResponseSchema: GenMessage<HealthServiceStatusResponse> = /*@__PURE__*/
-  messageDesc(file_health_v1_check, 1);
+export const HealthServiceStatusResponseSchema: GenMessage<HealthServiceStatusResponse> =
+	/*@__PURE__*/
+	messageDesc(file_health_v1_check, 1);
 
 /**
  * @generated from service health.v1.HealthService
  */
 export const HealthService: GenService<{
-  /**
-   * @generated from rpc health.v1.HealthService.Status
-   */
-  status: {
-    methodKind: "unary";
-    input: typeof HealthServiceStatusRequestSchema;
-    output: typeof HealthServiceStatusResponseSchema;
-  },
-}> = /*@__PURE__*/
-  serviceDesc(file_health_v1_check, 0);
-
+	/**
+	 * @generated from rpc health.v1.HealthService.Status
+	 */
+	status: {
+		methodKind: "unary";
+		input: typeof HealthServiceStatusRequestSchema;
+		output: typeof HealthServiceStatusResponseSchema;
+	};
+}> = /*@__PURE__*/ serviceDesc(file_health_v1_check, 0);

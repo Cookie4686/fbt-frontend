@@ -4,8 +4,8 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			user: import("$lib/schema/auth").User | null | undefined;
-			session: import("$lib/schema/auth").Session | null | undefined;
+			user: import("#lib/schema/auth.js").User | null | undefined;
+			session: import("#lib/schema/auth.js").Session | null | undefined;
 		}
 		// interface PageData {}
 		// interface PageState {}

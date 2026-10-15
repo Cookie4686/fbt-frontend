@@ -1,9 +1,10 @@
 <script lang="ts">
-	import favicon from "$lib/assets/favicon.svg";
-	import Nav from "$lib/components/nav/nav.svelte";
+	import { ModeWatcher } from "mode-watcher";
+
+	import favicon from "#lib/assets/favicon.svg";
 
 	import "./layout.css";
-	import { ModeWatcher } from "mode-watcher";
+	import Nav from "#lib/components/nav/nav.svelte";
 
 	let { children, data } = $props();
 	let { session } = $derived(data);

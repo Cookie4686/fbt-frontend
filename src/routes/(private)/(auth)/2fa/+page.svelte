@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from "$lib/components/ui/button/button.svelte";
-	import Route from "$lib/route";
+	import Button from "#lib/components/ui/button/button.svelte";
+	import Route from "#lib/route.js";
 </script>
 
 <main>

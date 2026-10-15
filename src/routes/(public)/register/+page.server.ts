@@ -1,9 +1,10 @@
 import { fail, redirect } from "@sveltejs/kit";
-import Route from "$lib/route";
-import { registerSchema } from "$lib/schema/auth";
-import { register } from "$lib/server/auth/credential";
 import { message, superValidate } from "sveltekit-superforms";
 import { zod4 } from "sveltekit-superforms/adapters";
+
+import Route from "#lib/route.js";
+import { registerSchema } from "#lib/schema/auth.js";
+import { register } from "#lib/server/auth/credential.js";
 
 import type { Actions, PageServerLoad } from "./$types";
 

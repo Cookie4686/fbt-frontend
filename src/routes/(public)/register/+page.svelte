@@ -1,9 +1,10 @@
 <script lang="ts">
-	import Formsnap from "$lib/components/formsnap.svelte";
-	import { registerSchema } from "$lib/schema/auth";
-	// import { m } from "$lib/paraglide/messages.js";
+	// import { m } from "#lib/paraglide/messages.js";
 	import { superForm } from "sveltekit-superforms";
 	import { zod4Client } from "sveltekit-superforms/adapters";
+
+	import Formsnap from "#lib/components/formsnap.svelte";
+	import { registerSchema } from "#lib/schema/auth.js";
 
 	import type { PageServerData } from "./$types";
 
@@ -13,7 +14,7 @@
 		superForm(data.form, {
 			validators: zod4Client(registerSchema),
 			delayMs: 3000,
-			timeoutMs: 10000
+			timeoutMs: 10000,
 		}))();
 </script>
 
@@ -27,8 +28,8 @@
 		{
 			name: "confirmedPassword",
 			label: "Confirmed Password",
-			inputProps: { type: "password" }
-		}
+			inputProps: { type: "password" },
+		},
 	]}
 	buttons={[{ label: "Register" }, { label: "Login", href: "/login", variant: "outline" }]}
 >

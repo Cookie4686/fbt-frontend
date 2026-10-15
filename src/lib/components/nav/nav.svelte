@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Session } from "$lib/schema/auth";
+	import type { Session } from "#lib/schema/auth.js";
 
-	import * as NavigationMenu from "$lib/components/ui/navigation-menu/index.js";
+	import * as NavigationMenu from "#lib/components/ui/navigation-menu/index.js";
 
 	import AuthButton from "./authButton.svelte";
 	import LanguageSelector from "./languageSelector.svelte";
@@ -12,7 +12,7 @@
 		{ title: "Accounts", href: "/accounts", description: "Accounts Page" },
 		{ title: "Transaction", href: "/transaction", description: "Transaction Page" },
 		{ title: "Profile", href: "/profile", description: "Profile Page" },
-		{ title: "Settings", href: "/settings", description: "Setting Page" }
+		{ title: "Settings", href: "/settings", description: "Setting Page" },
 	];
 
 	const { session }: { session?: Session | null } = $props();

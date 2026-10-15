@@ -1,11 +1,12 @@
 import { decodeBase64, encodeBase64 } from "@oslojs/encoding";
 import { createTOTPKeyURI, verifyTOTPWithGracePeriod } from "@oslojs/otp";
 import { fail, redirect } from "@sveltejs/kit";
-import Route from "$lib/route";
-import { digits, period, totpSetupFormSchema } from "$lib/schema/mfa";
-import { upsertTOTP } from "$lib/server/auth/mfa.js";
 import { message, setError, superValidate } from "sveltekit-superforms";
 import { zod4 } from "sveltekit-superforms/adapters";
+
+import Route from "#lib/route.js";
+import { digits, period, totpSetupFormSchema } from "#lib/schema/mfa.js";
+import { upsertTOTP } from "#lib/server/auth/mfa.js";
 
 import type { Actions, PageServerLoad } from "./$types";
 
