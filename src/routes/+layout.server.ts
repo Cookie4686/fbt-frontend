@@ -1,8 +1,10 @@
+import workspace from "#lib/server/local/workspace/workspace.js";
+
 import type { LayoutServerLoad } from "./$types";
 
-export const load: LayoutServerLoad = async (event) => {
+export const load: LayoutServerLoad = async () => {
 	return {
-		user: event.locals.user,
-		session: event.locals.session,
+		workspaces: workspace.workspaces,
+		currentWorkspace: workspace.currentWorkspace,
 	};
 };
