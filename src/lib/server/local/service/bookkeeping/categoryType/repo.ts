@@ -1,12 +1,6 @@
+import type { CategoryType } from "#lib/types/category.js";
+
 import { Repo } from "../../repo";
-
-export const categoryTypes = ["asset", "liability", "equity", "revenue", "expense"] as const;
-export type CategoryTypeEnum = (typeof categoryTypes)[number];
-
-interface CategoryType {
-	category_type: string;
-	is_deletable: boolean;
-}
 
 export class CategoryTypeRepo {
 	repo: Repo;

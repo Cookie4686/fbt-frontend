@@ -21,8 +21,6 @@
 <script lang="ts">
 	import type { ComponentProps } from "svelte";
 
-	import type { Workspace } from "#lib/server/local/workspace/workspace-config.js";
-
 	import * as Sidebar from "#lib/components/ui/sidebar/index.js";
 
 	import NavMain from "./nav-main.svelte";
@@ -34,16 +32,14 @@
 		collapsible = "icon",
 		workspaces,
 		currentWorkspace,
+		workspaceCreatePageProps,
 		...restProps
-	}: ComponentProps<typeof Sidebar.Root> & {
-		workspaces: readonly Workspace[];
-		currentWorkspace: Workspace;
-	} = $props();
+	}: ComponentProps<typeof Sidebar.Root> & ComponentProps<typeof WorkspaceSwitcher> = $props();
 </script>
 
 <Sidebar.Root bind:ref {collapsible} {...restProps}>
 	<Sidebar.Header>
-		<WorkspaceSwitcher {workspaces} {currentWorkspace} />
+		<WorkspaceSwitcher {workspaces} {currentWorkspace} {workspaceCreatePageProps} />
 	</Sidebar.Header>
 	<Sidebar.Content>
 		<NavMain items={navItems} />

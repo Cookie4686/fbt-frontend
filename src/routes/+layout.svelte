@@ -25,6 +25,7 @@
 		variant="sidebar"
 		workspaces={data.workspaces}
 		currentWorkspace={data.currentWorkspace}
+		workspaceCreatePageProps={{ form: data.createWorkspaceForm }}
 	/>
 	<Sidebar.Inset>
 		<div class="flex h-12 items-center justify-between gap-4 p-2">

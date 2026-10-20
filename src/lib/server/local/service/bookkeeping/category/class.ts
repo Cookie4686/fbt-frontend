@@ -1,7 +1,8 @@
-import type { Repo } from "../../repo";
+import { type AccountFieldsCreation } from "#lib/types/account.js";
+import { type CategoryFields } from "#lib/types/category.js";
+import { type CategoryFieldsCreation } from "#lib/types/category.js";
 
-import { type AccountFieldsCreation } from "../account/repo";
-import { type CategoryFields, type CategoryFieldsCreation } from "./repo";
+import type { Repo } from "../../repo";
 
 export class Category {
 	fields: CategoryFields;

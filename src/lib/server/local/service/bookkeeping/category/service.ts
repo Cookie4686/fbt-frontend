@@ -1,7 +1,9 @@
-import type { Repo } from "../../repo";
-import type { AccountFields } from "../account/repo";
+import type { AccountFields } from "#lib/types/account.js";
 
-import { type CategoryFields, type CategoryFieldsCreation } from "./repo";
+import { type CategoryFields } from "#lib/types/category.js";
+import { type CategoryFieldsCreation } from "#lib/types/category.js";
+
+import type { Repo } from "../../repo";
 
 export class CategoryService {
 	repo: Repo;
@@ -32,5 +34,9 @@ export class CategoryService {
 
 	public createCategory(payload: CategoryFieldsCreation): number {
 		return this.repo.category.create(payload);
+	}
+
+	public delete(categoryID: CategoryFields["category_id"]) {
+		return this.repo.category.delete(categoryID);
 	}
 }

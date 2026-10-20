@@ -1,17 +1,6 @@
-import type { OptionalNullable } from "#lib/utils.js";
+import type { CategoryFields, CategoryFieldsCreation } from "#lib/types/category.js";
 
 import type { Repo } from "../../repo";
-import type { CategoryTypeEnum } from "../categoryType/repo";
-
-export interface CategoryFields {
-	category_id: number;
-	parent_id: number | null;
-
-	name: string;
-	category_type: CategoryTypeEnum | null;
-}
-
-export type CategoryFieldsCreation = OptionalNullable<Omit<CategoryFields, "category_id">>;
 
 export class CategoryRepo {
 	repo: Repo;
@@ -35,10 +24,10 @@ export class CategoryRepo {
 		const response = this.repo.db
 			.prepare(
 				`
-        INSERT INTO category (parent_id,name, category_type)
-        VALUES (?, ?, ?)
-        RETURNING category_id
-      `
+          INSERT INTO category (parent_id,name, category_type)
+          VALUES (?, ?, ?)
+          RETURNING category_id
+        `
 			)
 			.get(parent_id, name, category_type);
 
@@ -51,10 +40,10 @@ export class CategoryRepo {
 		this.repo.db
 			.prepare(
 				`
-      UPDATE category
-      SET parent_id = ?
-      WHERE category_id = ?
-    `
+          UPDATE category
+          SET parent_id = ?
+          WHERE category_id = ?
+        `
 			)
 			.run(parent_id, category_id);
 	}
@@ -63,9 +52,9 @@ export class CategoryRepo {
 		this.repo.db
 			.prepare(
 				`
-      DELETE FROM category
-      WHERE category_id = ?
-    `
+          DELETE FROM category
+          WHERE category_id = ?
+        `
 			)
 			.run(categoryID);
 	}

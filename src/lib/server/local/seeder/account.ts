@@ -1,8 +1,8 @@
-import type { Repo } from "../service/repo";
+import { type AccountFieldsCreation } from "#lib/types/account.js";
+import { type CategoryFieldsCreation } from "#lib/types/category.js";
+import { categoryTypes } from "#lib/types/category.js";
 
-import { type AccountFieldsCreation } from "../service/bookkeeping/account/repo";
-import { type CategoryFieldsCreation } from "../service/bookkeeping/category/repo";
-import { categoryTypes } from "../service/bookkeeping/categoryType/repo";
+import type { Repo } from "../service/repo";
 
 type CategorySeedItem = CategoryFieldsCreation & {
 	accounts?: Omit<AccountFieldsCreation, "category_id">[];
