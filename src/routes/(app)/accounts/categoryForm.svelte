@@ -4,6 +4,10 @@
 
 	import type { CategoryFields } from "#lib/types/category.js";
 
+	import { Button } from "#lib/components/ui/button/index.js";
+	import * as Field from "#lib/components/ui/field/index.js";
+	import { Input } from "#lib/components/ui/input/index.js";
+
 	import type { CategoryCreateSchema } from "./schema";
 
 	let {
@@ -36,17 +40,25 @@
 </script>
 
 <form method="POST" action="?/createCategory" use:enhance>
-	<label for="name">Name</label>
-	<input
-		type="text"
-		name="name"
-		aria-invalid={$errors.name ? "true" : undefined}
-		bind:value={$form.name}
-		{...$constraints.name}
-	/>
-	<input type="text" name="parent_id" bind:value={$form.parent_id} />
-
-	{#if $errors.name}<div class="invalid">{$errors.name}</div>{/if}
-
-	<div><button>Submit</button></div>
+	<Field.Set>
+		<Field.Group>
+			<Field.Field data-invalid={$errors.name ? "true" : undefined}>
+				<Field.Label for="create-category-name">Category Name</Field.Label>
+				<Input
+					id="create-category-name"
+					type="text"
+					name="name"
+					autocomplete="off"
+					aria-invalid={$errors.name ? "true" : undefined}
+					bind:value={$form.name}
+					{...$constraints.name}
+				/>
+				<Field.Error>{$errors.name}</Field.Error>
+			</Field.Field>
+			<input type="text" name="parent_id" bind:value={$form.parent_id} hidden />
+		</Field.Group>
+		<Field.Field orientation="horizontal">
+			<Button type="submit">Submit</Button>
+		</Field.Field>
+	</Field.Set>
 </form>

@@ -17,8 +17,6 @@ export const load: PageServerLoad = async ({ depends }) => {
 
 	const categories = app.service.category.getAllWithAccount();
 
-	console.log("account load", categories.length);
-
 	const accountCreateForm = await accountCreateFormLoad();
 	const categoryCreateForm = await categoryCreateFormLoad();
 
@@ -28,7 +26,6 @@ export const load: PageServerLoad = async ({ depends }) => {
 export const actions: Actions = {
 	createAccount: async ({ request }) => {
 		const form = await accountCreateFormAction(request);
-
 		if (!form.valid) return fail(400, { form });
 
 		app.service.account.create(form.data);
@@ -37,7 +34,6 @@ export const actions: Actions = {
 	},
 	createCategory: async ({ request }) => {
 		const form = await categoryCreateFormAction(request);
-
 		if (!form.valid) return fail(400, { form });
 
 		const { name, parent_id } = form.data;

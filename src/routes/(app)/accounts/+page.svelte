@@ -5,24 +5,26 @@
 
 	import type { AccountFields } from "#lib/types/account.js";
 
-	import Button from "#lib/components/ui/button/button.svelte";
+	import { Button } from "#lib/components/ui/button/index.js";
 	import * as Card from "#lib/components/ui/card/index.js";
 	import * as Collapsible from "#lib/components/ui/collapsible/index.js";
 	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.js";
 
 	import type { PageServerData } from "./$types";
 
+	import AccountCreateFormDialog from "./accountCreateFormDialog.svelte";
 	import CategoryFormDialog from "./categoryFormDialog.svelte";
 
 	let { data }: { data: PageServerData } = $props();
 
 	let { categories } = $derived(data);
 
-	let dialogOpen = $state(false);
+	let createCategoryDialogOpen = $state(false);
+	let createAccountDialogOpen = $state(false);
 	let selectedCategory = $state<PageServerData["categories"][number] | null>(null);
 
 	const handleAddCategoryFormDialog = (category: PageServerData["categories"][number] | null) => {
-		dialogOpen = true;
+		createCategoryDialogOpen = true;
 		selectedCategory = category;
 	};
 
@@ -30,6 +32,11 @@
 
 	let handleAddSubCategoryAction = (category: PageServerData["categories"][number]) =>
 		handleAddCategoryFormDialog(category);
+
+	const handleAddAccountAction = (category: PageServerData["categories"][number]) => {
+		createAccountDialogOpen = true;
+		selectedCategory = category;
+	};
 
 	let handleDeleteCategoryAction = async (
 		id: PageServerData["categories"][number]["category_id"]
@@ -66,8 +73,14 @@
 		</Card.Content>
 	</Card.Root>
 
+	<AccountCreateFormDialog
+		bind:open={createAccountDialogOpen}
+		category={selectedCategory}
+		form={data.accountCreateForm}
+	/>
+
 	<CategoryFormDialog
-		bind:open={dialogOpen}
+		bind:open={createCategoryDialogOpen}
 		category={selectedCategory}
 		form={data.categoryCreateForm}
 	/>
@@ -119,7 +132,9 @@
 			{/snippet}
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content>
-			<DropdownMenu.Item>Add Account</DropdownMenu.Item>
+			<DropdownMenu.Item onSelect={() => handleAddAccountAction(category)}>
+				Add Account
+			</DropdownMenu.Item>
 			<DropdownMenu.Item onSelect={() => handleAddSubCategoryAction(category)}>
 				Add Subcategory
 			</DropdownMenu.Item>

@@ -10,9 +10,9 @@ const accountCreateSchema = z.object({
 });
 
 export type AccountCreateSchema = typeof accountCreateSchema;
+export type AccountCreateSchemaType = z.infer<AccountCreateSchema>;
 
 export const accountCreateFormLoad = async () => await superValidate(zod4(accountCreateSchema));
-
 export const accountCreateFormAction = async (request: Request) =>
 	await superValidate(request, zod4(accountCreateSchema));
 
@@ -22,8 +22,8 @@ const categoryCreateSchema = z.object({
 });
 
 export type CategoryCreateSchema = typeof categoryCreateSchema;
+export type CategoryCreateSchemaType = z.infer<CategoryCreateSchema>;
 
 export const categoryCreateFormLoad = async () => await superValidate(zod4(categoryCreateSchema));
-
 export const categoryCreateFormAction = async (request: Request) =>
 	await superValidate(request, zod4(categoryCreateSchema));
