@@ -15,7 +15,15 @@ const INIT_DATA: CategorySeedItem[] = [
 		subCategories: [
 			{
 				name: "Current Asset",
-				accounts: [{ code: "1001", name: "Cash", is_debit: true }],
+				subCategories: [
+					{
+						name: "Cash & Equivalent",
+						code_prefix: "11|3",
+						accounts: [{ code: "11001", name: "Cash", is_debit: true }],
+					},
+					{ name: "Prepaid Expense", code_prefix: "12|3" },
+					{ name: "Account Receivable", code_prefix: "13|3" },
+				],
 			},
 			{ name: "Non-Current Asset" },
 		],
@@ -23,18 +31,35 @@ const INIT_DATA: CategorySeedItem[] = [
 	{
 		name: "Liability",
 		category_type: "liability",
-		subCategories: [{ name: "Current Liability" }, { name: "Non-Current Liability" }],
+		subCategories: [
+			{
+				name: "Current Liability",
+				subCategories: [
+					{ name: "Accrued Expense", code_prefix: "21|3" },
+					{ name: "Accounts Payable", code_prefix: "22|3" },
+				],
+			},
+			{ name: "Non-Current Liability", code_prefix: "22|3" },
+		],
 	},
-	{ name: "Equity", category_type: "equity", subCategories: [{ name: "Retained Earnings" }] },
+	{
+		name: "Equity",
+		category_type: "equity",
+		subCategories: [
+			{ name: "Retained Earnings" },
+			{ name: "Main Budget" },
+			{ name: "Secondary Budget" },
+		],
+	},
 	{
 		name: "Revenue",
 		category_type: "revenue",
-		subCategories: [{ name: "Interest" }, { name: "Dividend" }],
+		subCategories: [{ name: "Investment", subCategories: [{ name: "Interest Income" }] }],
 	},
 	{
 		name: "Expense",
 		category_type: "expense",
-		subCategories: [{ name: "Operating" }, { name: "Others" }],
+		subCategories: [{ name: "Operating Expense", subCategories: [{ name: "Food Expense" }] }],
 	},
 ];
 
@@ -50,9 +75,9 @@ export function seedAccount(repo: Repo, currentVersion: string) {
 		category: CategorySeedItem,
 		parent_id: CategoryFieldsCreation["parent_id"]
 	) => {
-		const { name, category_type, accounts, subCategories } = category;
+		const { accounts, subCategories, ...categoryFields } = category;
 
-		const category_id = repo.category.create({ parent_id, name, category_type });
+		const category_id = repo.category.create({ ...categoryFields, parent_id });
 
 		if (accounts) {
 			for (const account of accounts) {

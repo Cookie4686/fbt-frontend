@@ -29,6 +29,8 @@
 
 	const sidebar = useSidebar();
 
+	let dialogOpen = $state(false);
+
 	const handleWorkspaceChange = async (workspaceName: string) => {
 		if (workspaceName === currentWorkspaceName) {
 			await refreshAll();
@@ -40,9 +42,7 @@
 			body: JSON.stringify({ name: workspaceName }),
 		});
 
-		if (!response.ok) {
-			console.log("Workspace change failed");
-		} else {
+		if (response.ok) {
 			const data = await response.json();
 			currentWorkspace = data.workspace;
 
@@ -56,17 +56,13 @@
 			body: JSON.stringify({ name: workspaceName }),
 		});
 
-		if (!response.ok) {
-			console.log("delete failed");
-		} else {
-			await refreshAll();
-		}
+		if (response.ok) await refreshAll();
 	};
 </script>
 
 <!-- TODO: might refactor or something -->
 
-<Dialog.Root>
+<Dialog.Root bind:open={dialogOpen}>
 	<Sidebar.Menu>
 		<Sidebar.MenuItem>
 			<DropdownMenu.Root>
@@ -143,7 +139,12 @@
 			<Dialog.Title>Add Workspace</Dialog.Title>
 			<Dialog.Description>Create a new workspace.</Dialog.Description>
 		</Dialog.Header>
-		<WorkspaceCreateForm {...workspaceCreatePageProps} />
+		<WorkspaceCreateForm
+			{...workspaceCreatePageProps}
+			onSuccess={() => {
+				dialogOpen = false;
+			}}
+		/>
 	</Dialog.Content>
 </Dialog.Root>
 

@@ -12,12 +12,14 @@
 	let {
 		form: createForm,
 		category_id,
-		defaultAccountSide,
+		defaultAccountCode = "",
+		defaultAccountSide = "debit",
 		onSuccess,
 	}: {
 		form: SuperValidated<Infer<AccountCreateSchema>>;
 		category_id: AccountCreateSchemaType["category_id"];
-		defaultAccountSide: "debit" | "credit";
+		defaultAccountCode?: AccountCreateSchemaType["code"];
+		defaultAccountSide?: "debit" | "credit";
 		onSuccess?: () => void;
 	} = $props();
 
@@ -32,16 +34,17 @@
 		}
 	);
 
-	let accountSide = $derived($form.is_debit ? "Debit" : "Credit");
-
 	form.update(
 		($form) => {
 			$form.category_id = category_id;
 			$form.is_debit = defaultAccountSide === "debit";
+			$form.code = defaultAccountCode;
 			return $form;
 		},
 		{ taint: false }
 	);
+
+	let accountSide = $derived($form.is_debit ? "Debit" : "Credit");
 </script>
 
 <form method="POST" action="?/createAccount" use:enhance>

@@ -3,7 +3,7 @@
 	import EllipsisVerticalIcon from "@lucide/svelte/icons/ellipsis-vertical";
 	import { invalidate } from "$app/navigation";
 
-	import type { AccountFields } from "#lib/types/account.js";
+	import type { CategoryWithAccount } from "#lib/types/category.js";
 
 	import { Button } from "#lib/components/ui/button/index.js";
 	import * as Card from "#lib/components/ui/card/index.js";
@@ -21,9 +21,9 @@
 
 	let createCategoryDialogOpen = $state(false);
 	let createAccountDialogOpen = $state(false);
-	let selectedCategory = $state<PageServerData["categories"][number] | null>(null);
+	let selectedCategory = $state<CategoryWithAccount | null>(null);
 
-	const handleAddCategoryFormDialog = (category: PageServerData["categories"][number] | null) => {
+	const handleAddCategoryFormDialog = (category: CategoryWithAccount | null) => {
 		createCategoryDialogOpen = true;
 		selectedCategory = category;
 	};
@@ -38,20 +38,24 @@
 		selectedCategory = category;
 	};
 
-	let handleDeleteCategoryAction = async (
-		id: PageServerData["categories"][number]["category_id"]
-	) => {
+	let handleDeleteCategoryAction = async (id: CategoryWithAccount["category_id"]) => {
 		const response = await fetch("/api/category", {
 			method: "DELETE",
 			body: JSON.stringify({ id }),
-			headers: { "content-type": "application/json" },
 		});
 
-		if (!response.ok) {
-			console.log("Workspace change failed");
-		}
+		if (response.ok) await invalidate("data:categories");
+	};
 
-		invalidate("data:categories");
+	let handleDeleteAccountAction = async (
+		id: CategoryWithAccount["accounts"][number]["account_id"]
+	) => {
+		const response = await fetch("/api/account", {
+			method: "DELETE",
+			body: JSON.stringify({ id }),
+		});
+
+		if (response.ok) await invalidate("data:categories");
 	};
 </script>
 
@@ -86,21 +90,25 @@
 	/>
 </div>
 
-{#snippet categoryCollapsible(category: PageServerData["categories"][number])}
+{#snippet categoryCollapsible(category: CategoryWithAccount)}
 	<Collapsible.Root>
 		<Collapsible.Trigger>
 			{#snippet child({ props })}
-				<div class="relative mt-1 flex justify-between">
+				<div class="mt-1 flex">
 					<Button
 						{...props}
 						variant="outline"
 						size="sm"
-						class="group flex w-min grow items-center justify-start gap-2 transition-none"
+						class="group flex w-min grow items-center justify-between gap-2 transition-none"
 					>
-						{category.name}
-						<ChevronRightIcon class="transition-transform group-data-[state=open]:rotate-90" />
+						<div class="flex items-center gap-2">
+							{category.code_prefix
+								&& `${category.code_prefix.split("|")[0]}${"0".repeat(Number.parseInt(category.code_prefix.split("|")[1]))}`}
+							{category.name}
+							<ChevronRightIcon class="transition-transform group-data-[state=open]:rotate-90" />
+						</div>
+						{@render categoryDropdown(category)}
 					</Button>
-					{@render categoryDropdown(category)}
 				</div>
 			{/snippet}
 		</Collapsible.Trigger>
@@ -117,38 +125,59 @@
 	</Collapsible.Root>
 {/snippet}
 
-{#snippet categoryDropdown(category: PageServerData["categories"][number])}
+{#snippet categoryDropdown(category: CategoryWithAccount)}
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger>
 			{#snippet child({ props })}
-				<Button
-					{...props}
-					variant="link"
-					size="icon-sm"
-					class="absolute top-0 right-4 cursor-pointer"
-				>
-					<EllipsisVerticalIcon />
-				</Button>
+				<div {...props} class="cursor-pointer"><EllipsisVerticalIcon /></div>
 			{/snippet}
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content>
+			<DropdownMenu.Item>Edit Category</DropdownMenu.Item>
 			<DropdownMenu.Item onSelect={() => handleAddAccountAction(category)}>
 				Add Account
 			</DropdownMenu.Item>
 			<DropdownMenu.Item onSelect={() => handleAddSubCategoryAction(category)}>
 				Add Subcategory
 			</DropdownMenu.Item>
-			<DropdownMenu.Item onSelect={() => handleDeleteCategoryAction(category.category_id)}>
+			<DropdownMenu.Item
+				variant="destructive"
+				onSelect={() => handleDeleteCategoryAction(category.category_id)}
+			>
 				Delete Category
 			</DropdownMenu.Item>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 {/snippet}
 
-{#snippet accountFile(account: AccountFields)}
-	<Button variant="ghost" size="sm" class="mt-1 w-full justify-start gap-2 text-foreground">
-		<span>{account.code}</span>
-		<span>{account.name}</span>
-		<span>{account.is_debit ? "Debit" : "Credit"}</span>
+{#snippet accountFile(account: CategoryWithAccount["accounts"][number])}
+	<Button variant="ghost" size="sm" class="mt-1 flex w-full justify-between gap-2 text-foreground">
+		<div>
+			<span class={account.is_debit ? "text-green-300" : "text-red-300"}>
+				{account.is_debit ? "DR" : "CR"}
+			</span>
+			<span>{account.code}</span>
+			<span>{account.name}</span>
+		</div>
+		{@render accountDropdown(account)}
 	</Button>
+{/snippet}
+
+{#snippet accountDropdown(account: CategoryWithAccount["accounts"][number])}
+	<DropdownMenu.Root>
+		<DropdownMenu.Trigger>
+			{#snippet child({ props })}
+				<div {...props} class="cursor-pointer"><EllipsisVerticalIcon /></div>
+			{/snippet}
+		</DropdownMenu.Trigger>
+		<DropdownMenu.Content>
+			<DropdownMenu.Item>Edit Account</DropdownMenu.Item>
+			<DropdownMenu.Item
+				variant="destructive"
+				onSelect={() => handleDeleteAccountAction(account.account_id)}
+			>
+				Delete Account
+			</DropdownMenu.Item>
+		</DropdownMenu.Content>
+	</DropdownMenu.Root>
 {/snippet}

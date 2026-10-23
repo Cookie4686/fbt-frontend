@@ -10,7 +10,14 @@ export class AccountRepo {
 	}
 
 	public getAll() {
-		return this.repo.db.prepare(`SELECT * FROM account`).all() as unknown as AccountFields[];
+		return this.repo.db
+			.prepare(
+				`
+          SELECT * FROM account
+          ORDER BY code ASC
+        `
+			)
+			.all() as unknown as AccountFields[];
 	}
 
 	public create(payload: AccountFieldsCreation) {

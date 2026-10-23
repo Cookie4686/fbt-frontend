@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS category (
 
   name TEXT NOT NULL UNIQUE,
   description TEXT,
+  code_prefix TEXT,
 
   sequence INTEGER
 ) STRICT;

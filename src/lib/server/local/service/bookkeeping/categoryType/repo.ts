@@ -1,4 +1,4 @@
-import type { CategoryType } from "#lib/types/category.js";
+import type { CategoryTypeFields, CategoryTypeFieldsCreation } from "#lib/types/category.js";
 
 import { Repo } from "../../repo";
 
@@ -9,7 +9,7 @@ export class CategoryTypeRepo {
 		this.repo = repo;
 	}
 
-	public create({ category_type, is_deletable }: CategoryType) {
+	public create({ category_type, is_deletable }: CategoryTypeFieldsCreation) {
 		this.repo.db
 			.prepare(
 				`
@@ -21,6 +21,8 @@ export class CategoryTypeRepo {
 	}
 
 	public getAll() {
-		return this.repo.db.prepare(`SELECT * FROM category_type`).all() as unknown as CategoryType[];
+		return this.repo.db
+			.prepare(`SELECT * FROM category_type`)
+			.all() as unknown as CategoryTypeFields[];
 	}
 }

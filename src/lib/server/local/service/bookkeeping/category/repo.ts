@@ -12,24 +12,36 @@ export class CategoryRepo {
 	public getAll() {
 		// TODO: create fields converter
 		const categoryData: CategoryFields[] = this.repo.db
-			.prepare("SELECT * FROM category")
+			.prepare(
+				`
+          SELECT * FROM category
+          ORDER BY code_prefix ASC, sequence ASC
+        `
+			)
 			.all() as unknown as CategoryFields[];
 
 		return categoryData;
 	}
 
 	public create(payload: CategoryFieldsCreation) {
-		const { parent_id = null, name, category_type = null } = payload;
+		const {
+			parent_id = null,
+			category_type = null,
+			name,
+			description = null,
+			code_prefix = null,
+			sequence = null,
+		} = payload;
 
 		const response = this.repo.db
 			.prepare(
 				`
-          INSERT INTO category (parent_id,name, category_type)
-          VALUES (?, ?, ?)
+          INSERT INTO category (parent_id, category_type, name, description, code_prefix, sequence)
+          VALUES (?, ?, ?, ?, ?, ?)
           RETURNING category_id
         `
 			)
-			.get(parent_id, name, category_type);
+			.get(parent_id, category_type, name, description, code_prefix, sequence);
 
 		return response?.category_id as number;
 	}

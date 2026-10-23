@@ -5,43 +5,36 @@ import app from "#lib/server/local/app.js";
 
 import type { PageServerLoad } from "./$types";
 
-import {
-	accountCreateFormAction,
-	accountCreateFormLoad,
-	categoryCreateFormAction,
-	categoryCreateFormLoad,
-} from "./schema";
+import * as Schema from "./schema";
 
 export const load: PageServerLoad = async ({ depends }) => {
 	depends("data:categories");
 
 	const categories = app.service.category.getAllWithAccount();
 
-	const accountCreateForm = await accountCreateFormLoad();
-	const categoryCreateForm = await categoryCreateFormLoad();
+	const accountCreateForm = await Schema.accountCreateFormLoad();
+	const categoryCreateForm = await Schema.categoryCreateFormLoad();
 
 	return { categories, accountCreateForm, categoryCreateForm };
 };
 
 export const actions: Actions = {
+	createCategory: async ({ request }) => {
+		const form = await Schema.categoryCreateFormAction(request);
+		if (!form.valid) return fail(400, { form });
+
+		const { name, parent_id } = form.data;
+
+		const id = app.service.category.create({ name, parent_id });
+
+		return message(form, { id });
+	},
 	createAccount: async ({ request }) => {
-		const form = await accountCreateFormAction(request);
+		const form = await Schema.accountCreateFormAction(request);
 		if (!form.valid) return fail(400, { form });
 
 		app.service.account.create(form.data);
 
 		return message(form, "success");
 	},
-	createCategory: async ({ request }) => {
-		const form = await categoryCreateFormAction(request);
-		if (!form.valid) return fail(400, { form });
-
-		const { name, parent_id } = form.data;
-
-		const id = app.service.category.createCategory({ name, parent_id });
-
-		return message(form, { id });
-	},
-	// update: async (event) => {
-	// },
 };
