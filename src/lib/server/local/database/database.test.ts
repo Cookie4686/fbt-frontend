@@ -1,9 +1,13 @@
-import { existsSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { test as baseTest, describe, expect } from "vitest";
 
 import { createDatabase } from "./database";
 
-const test = baseTest.extend("filePath", ".test/db.sqlite3");
+const test = baseTest
+	.extend("workspacePath", () => mkdtempSync(path.join(tmpdir(), "fbt")))
+	.extend("filePath", ({ workspacePath }) => path.join(workspacePath, "db.sqlite3"));
 
 describe("createDatabase()", () => {
 	test("given no file path should create an in-memory database", () => {

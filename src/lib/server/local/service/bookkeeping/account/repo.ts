@@ -3,7 +3,7 @@ import type { AccountFields, AccountFieldsCreation } from "#lib/types/account.js
 import type { Repo } from "../../repo";
 
 export class AccountRepo {
-	repo: Repo;
+	private repo: Repo;
 
 	constructor(repo: Repo) {
 		this.repo = repo;

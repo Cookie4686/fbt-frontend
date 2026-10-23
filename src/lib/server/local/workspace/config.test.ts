@@ -11,6 +11,18 @@ const test = baseTest
 	.extend("workspacesPath", () => mkdtempSync(path.join(tmpdir(), "fbt")))
 	.extend("workspacesConfigPath", ({ workspacesPath }) =>
 		path.join(workspacesPath, WorkspaceConfigurator.configFilename)
+	)
+	.extend(
+		"setupWorkspaces",
+		({ workspacesPath, workspacesConfigPath }) =>
+			(config: WorkspaceConfig): WorkspaceConfig => {
+				for (const { folderName } of config.workspaces) {
+					mkdirSync(path.join(workspacesPath, folderName));
+				}
+
+				writeFileSync(workspacesConfigPath, JSON.stringify(config), "utf8");
+				return config;
+			}
 	);
 
 test.afterEach(({ workspacesPath }) => {
@@ -25,31 +37,53 @@ describe("constructor()", () => {
 	test("given valid config file should read workspaces", ({
 		workspacesPath,
 		workspacesConfigPath,
+		setupWorkspaces,
 	}) => {
 		const workspaces = [{ name: "main", folderName: "main-folder" }];
-		mkdirSync(path.join(workspacesPath, workspaces[0].folderName));
-		writeConfigFile(workspacesConfigPath, { workspaces });
+		const config = setupWorkspaces({ workspaces, lastWorkspaceName: "main" });
 
 		const configurator = new WorkspaceConfigurator(workspacesPath);
 
 		expect(configurator.workspaces).toEqual(workspaces);
-		expect(JSON.parse(readFileSync(workspacesConfigPath, "utf8"))).toEqual({ workspaces });
+		expect(configurator.config).toEqual(config);
+		expect(JSON.parse(readFileSync(workspacesConfigPath, "utf8"))).toEqual(config);
 	});
 
-	test("given invalid or out-of-sync config file should read and keep workspaces", ({
+	test("given out-of-sync config file should read and keep valid workspaceinfo", ({
 		workspacesPath,
 		workspacesConfigPath,
+		setupWorkspaces,
 	}) => {
-		const workspaces = [{ name: "main-folder", folderName: "main-folder" }];
-		mkdirSync(path.join(workspacesPath, workspaces[0].folderName));
+		const workspaces = [
+			{ name: "a", folderName: "a-folder" },
+			{ name: "b", folderName: "b-folder" },
+		];
+		const config = setupWorkspaces({ workspaces, lastWorkspaceName: "b" });
+
+		writeConfigFile(workspacesConfigPath, {
+			...config,
+			workspaces: [...workspaces, { name: "old", folderName: "old" }],
+		});
+		const configurator = new WorkspaceConfigurator(workspacesPath);
+		expect(configurator.workspaces).toEqual(workspaces);
+		expect(configurator.config).toEqual(config);
+		expect(JSON.parse(readFileSync(workspacesConfigPath, "utf8"))).toEqual(config);
+	});
+
+	test("given invalid config file should read and regenerate workspace config", ({
+		workspacesPath,
+		workspacesConfigPath,
+		setupWorkspaces,
+	}) => {
+		const workspaces = [
+			{ name: "a-folder", folderName: "a-folder" },
+			{ name: "b-folder", folderName: "b-folder" },
+		];
+		setupWorkspaces({ workspaces, lastWorkspaceName: "b" });
 
 		writeFileSync(workspacesConfigPath, "{invalid json}", "utf8");
 		expect(new WorkspaceConfigurator(workspacesPath).workspaces).toEqual(workspaces);
-		expect(JSON.parse(readFileSync(workspacesConfigPath, "utf8"))).toEqual({ workspaces });
-
-		writeConfigFile(workspacesConfigPath, { workspaces: [{ name: "old", folderName: "old" }] });
-		expect(new WorkspaceConfigurator(workspacesPath).workspaces).toEqual(workspaces);
-		expect(JSON.parse(readFileSync(workspacesConfigPath, "utf8"))).toEqual({ workspaces });
+		expect(JSON.parse(readFileSync(workspacesConfigPath, "utf8")).workspaces).toEqual(workspaces);
 	});
 });
 

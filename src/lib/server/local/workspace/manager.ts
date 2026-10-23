@@ -57,7 +57,7 @@ export class WorkspaceManager {
 					this.workspaces.find(({ name }) => name === lastWorkspaceName)
 				:	undefined;
 
-			this._currentWorkspaceName = lastWorkspace?.name || "";
+			this._currentWorkspaceName = lastWorkspace?.name || this.workspaces[0].name;
 			this._service = new WorkspaceService(
 				this.currentWorkspace ?
 					path.join(this.workspacesPath, this.currentWorkspace.folderName)

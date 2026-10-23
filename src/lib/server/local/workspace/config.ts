@@ -58,7 +58,7 @@ export class WorkspaceConfigurator {
 				});
 			}
 
-			this._config = { workspaces: syncWorkspaces };
+			this._config = { ...this._config, workspaces: syncWorkspaces };
 			writeFileSync(this.workspacesConfigPath, JSON.stringify(this._config), "utf8");
 		} else {
 			this._config = { workspaces: [] };

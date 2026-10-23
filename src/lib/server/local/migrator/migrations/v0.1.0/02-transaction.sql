@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS transaction_type (
 CREATE TABLE IF NOT EXISTS transactions (
   transaction_id INTEGER PRIMARY KEY,
   datetime TEXT NOT NULL,
-  note TEXT NOT NULL,
-  description TEXT,
+  description TEXT NOT NULL,
+  note TEXT,
 
   sequence INTEGER
 ) STRICT;

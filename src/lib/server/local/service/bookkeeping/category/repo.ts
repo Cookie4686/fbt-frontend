@@ -3,7 +3,7 @@ import type { CategoryFields, CategoryFieldsCreation } from "#lib/types/category
 import type { Repo } from "../../repo";
 
 export class CategoryRepo {
-	repo: Repo;
+	private repo: Repo;
 
 	constructor(repo: Repo) {
 		this.repo = repo;
