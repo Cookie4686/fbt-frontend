@@ -2,18 +2,17 @@
 	import ChevronRightIcon from "@lucide/svelte/icons/chevron-right";
 	import EllipsisVerticalIcon from "@lucide/svelte/icons/ellipsis-vertical";
 	import { invalidate } from "$app/navigation";
-	import { untrack } from "svelte";
-	import { superForm } from "sveltekit-superforms";
 
 	import type { AccountFields } from "#lib/types/account.js";
 
 	import Button from "#lib/components/ui/button/button.svelte";
 	import * as Card from "#lib/components/ui/card/index.js";
 	import * as Collapsible from "#lib/components/ui/collapsible/index.js";
-	import * as Dialog from "#lib/components/ui/dialog/index.js";
 	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.js";
 
 	import type { PageServerData } from "./$types";
+
+	import CategoryFormDialog from "./categoryFormDialog.svelte";
 
 	let { data }: { data: PageServerData } = $props();
 
@@ -22,25 +21,9 @@
 	let dialogOpen = $state(false);
 	let selectedCategory = $state<PageServerData["categories"][number] | null>(null);
 
-	const { form, errors, constraints, enhance } = superForm(
-		untrack(() => data.categoryCreateForm),
-		{
-			onUpdate: ({ form }) => {
-				if (form.valid) {
-					dialogOpen = false;
-				}
-			},
-		}
-	);
-
 	const handleAddCategoryFormDialog = (category: PageServerData["categories"][number] | null) => {
 		dialogOpen = true;
 		selectedCategory = category;
-
-		form.update(($form) => {
-			$form.parent_id = category?.category_id;
-			return $form;
-		});
 	};
 
 	let handleAddTopLevelCategory = () => handleAddCategoryFormDialog(null);
@@ -83,45 +66,15 @@
 		</Card.Content>
 	</Card.Root>
 
-	<Dialog.Root
-		open={dialogOpen}
-		onOpenChange={(open) => {
-			dialogOpen = open;
-		}}
-	>
-		<Dialog.Content>
-			<Dialog.Header>
-				<Dialog.Title
-					>{selectedCategory ?
-						`Add Sub-Category to ${selectedCategory.name}`
-					:	"Add Top Level Category"}</Dialog.Title
-				>
-				<Dialog.Description>You can see it as a folder.</Dialog.Description>
-			</Dialog.Header>
-
-			<form method="POST" action="?/createCategory" use:enhance>
-				<label for="name">Name</label>
-				<input
-					type="text"
-					name="name"
-					aria-invalid={$errors.name ? "true" : undefined}
-					bind:value={$form.name}
-					{...$constraints.name}
-				/>
-				<input type="text" name="parent_id" bind:value={$form.parent_id} />
-
-				{#if $errors.name}<div class="invalid">{$errors.name}</div>{/if}
-
-				<div><button>Submit</button></div>
-			</form>
-		</Dialog.Content>
-	</Dialog.Root>
+	<CategoryFormDialog
+		bind:open={dialogOpen}
+		category={selectedCategory}
+		form={data.categoryCreateForm}
+	/>
 </div>
 
 {#snippet categoryCollapsible(category: PageServerData["categories"][number])}
-	<Collapsible.Root
-		open={selectedCategory ? selectedCategory.category_id === category.category_id : false}
-	>
+	<Collapsible.Root>
 		<Collapsible.Trigger>
 			{#snippet child({ props })}
 				<div class="relative mt-1 flex justify-between">

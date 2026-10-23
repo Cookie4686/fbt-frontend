@@ -26,4 +26,15 @@ export class AccountRepo {
 			.get(category_id, code, name, +is_debit);
 		return accountID?.account_id as number;
 	}
+
+	public delete(accountID: AccountFields["account_id"]) {
+		this.repo.db
+			.prepare(
+				`
+          DELETE FROM account
+          WHERE account_id = ?
+        `
+			)
+			.run(accountID);
+	}
 }

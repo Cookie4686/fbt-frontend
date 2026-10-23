@@ -9,12 +9,16 @@ import { existsSync, mkdirSync } from "node:fs";
 import path from "node:path";
 
 import { createDatabase, setupDatabase } from "../database/database";
+import { AccountService } from "../service/bookkeeping/account/service";
 import { CategoryService } from "../service/bookkeeping/category/service";
 import { Repo } from "../service/repo";
 
 export class WorkspaceService {
+	static dataFilename = "data.sqlite3";
+
 	private db: DatabaseSync;
 
+	public account: AccountService;
 	public category: CategoryService;
 
 	/**
@@ -27,9 +31,12 @@ export class WorkspaceService {
 			mkdirSync(workspacePath, { recursive: true });
 		}
 
-		this.db = createDatabase(workspacePath ? path.join(workspacePath, "data.sqlite3") : undefined);
+		this.db = createDatabase(
+			workspacePath ? path.join(workspacePath, WorkspaceService.dataFilename) : undefined
+		);
 
 		const repo = new Repo(this.db);
+		this.account = new AccountService(repo);
 		this.category = new CategoryService(repo);
 
 		setupDatabase(this.db, repo);

@@ -1,3 +1,5 @@
+import type { OptionalNullable } from "#lib/utils.js";
+
 export interface AccountFields {
 	account_id: number;
 	category_id: number;
@@ -6,4 +8,4 @@ export interface AccountFields {
 	is_debit: boolean;
 }
 
-export type AccountFieldsCreation = Omit<AccountFields, "account_id">;
+export type AccountFieldsCreation = OptionalNullable<Omit<AccountFields, "account_id">>;

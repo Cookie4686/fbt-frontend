@@ -5,7 +5,7 @@ import {
 	workspaceCreateFormAction,
 	workspaceCreateFormLoad,
 } from "#lib/components/workspace-create-schema.js";
-import workspace from "#lib/server/local/workspace/manager.js";
+import app from "#lib/server/local/app.js";
 
 import type { Actions, PageServerLoad } from "./$types";
 
@@ -23,7 +23,7 @@ export const actions = {
 
 		const { name } = form.data;
 
-		workspace.changeWorkspace(workspace.createWorkspace({ name }).name);
+		app.workspace.changeWorkspace(app.workspace.createWorkspace({ name }).name);
 
 		return message(form, "success");
 	},

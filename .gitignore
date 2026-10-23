@@ -29,5 +29,3 @@ project.inlang/cache/
 
 # Application Data
 .app/
-# Folder generated when testing
-.test/

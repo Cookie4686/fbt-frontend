@@ -1,25 +1,19 @@
-import { homedir } from "node:os";
 import path from "node:path";
 
 import { type Workspace, type WorkspaceCreation } from "#lib/types/app.js";
 
-import app from "../app";
 import { WorkspaceConfigurator } from "./config";
 import { WorkspaceService } from "./service";
 
-const DEFAULT_WORKSPACES_PATH = path.join(homedir(), "/Documents/fbt/workspaces");
-
-class WorkspaceManager {
+export class WorkspaceManager {
+	private workspacesPath: string;
 	private __workspacesConfigurator: WorkspaceConfigurator;
-
-	// TODO: set workspaces path from app config
-	private workspacesPath: string = DEFAULT_WORKSPACES_PATH;
 
 	get workspaces() {
 		return this.__workspacesConfigurator.workspaces;
 	}
 
-	private _currentWorkspaceName = "";
+	private _currentWorkspaceName;
 
 	get currentWorkspace(): Readonly<Workspace> | null {
 		if (this._currentWorkspaceName === "") return null;
@@ -37,7 +31,10 @@ class WorkspaceManager {
 		this._service = new WorkspaceService(
 			workspace ? path.join(this.workspacesPath, workspace.folderName) : undefined
 		);
-		app.config = { ...app.config, lastWorkspaceName: workspace?.name };
+		this.__workspacesConfigurator.config = {
+			...this.__workspacesConfigurator.config,
+			lastWorkspaceName: workspace?.name,
+		};
 	}
 
 	private _service: WorkspaceService = new WorkspaceService();
@@ -46,21 +43,27 @@ class WorkspaceManager {
 		return this._service;
 	}
 
-	constructor() {
-		this.__workspacesConfigurator = new WorkspaceConfigurator(this.workspacesPath);
+	constructor(workspacesPath: string) {
+		this.workspacesPath = workspacesPath;
+		this.__workspacesConfigurator = new WorkspaceConfigurator(workspacesPath);
+		const lastWorkspaceName = this.__workspacesConfigurator.config.lastWorkspaceName;
 
-		if (this.workspaces.length !== 0) {
-			const { lastWorkspaceName } = app.config;
-
+		if (this.workspaces.length === 0) {
+			this._currentWorkspaceName = "";
+			this._service = new WorkspaceService();
+		} else {
 			const lastWorkspace =
 				lastWorkspaceName ?
 					this.workspaces.find(({ name }) => name === lastWorkspaceName)
 				:	undefined;
 
-			this.currentWorkspace = lastWorkspace || this.workspaces[0];
+			this._currentWorkspaceName = lastWorkspace?.name || "";
+			this._service = new WorkspaceService(
+				this.currentWorkspace ?
+					path.join(this.workspacesPath, this.currentWorkspace.folderName)
+				:	undefined
+			);
 		}
-
-		this.currentWorkspace = null;
 	}
 
 	public changeWorkspace(name?: string | null): typeof this.currentWorkspace {
@@ -82,17 +85,14 @@ class WorkspaceManager {
 
 	public deleteWorkspace(workspaceName: string) {
 		const workspace = this.workspaces.find(({ name }) => name === workspaceName);
-
 		if (!workspace) throw new Error("Delete workspace error: workspace not found");
+
+		const isCurrent = workspace === this.currentWorkspace;
 
 		this.__workspacesConfigurator.deleteWorkspaceFolder(workspace.folderName);
 
-		if (workspace === this.currentWorkspace) {
+		if (isCurrent) {
 			this.currentWorkspace = this.workspaces.length === 0 ? null : this.workspaces[0];
 		}
 	}
 }
-
-const workspace = new WorkspaceManager();
-
-export default workspace;

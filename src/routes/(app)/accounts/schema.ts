@@ -3,10 +3,13 @@ import { zod4 } from "sveltekit-superforms/adapters";
 import { z } from "zod";
 
 const accountCreateSchema = z.object({
+	category_id: z.number(),
 	code: z.string().min(3),
 	name: z.string(),
 	is_debit: z.boolean(),
 });
+
+export type AccountCreateSchema = typeof accountCreateSchema;
 
 export const accountCreateFormLoad = async () => await superValidate(zod4(accountCreateSchema));
 
@@ -17,6 +20,8 @@ const categoryCreateSchema = z.object({
 	name: z.string(),
 	parent_id: z.coerce.number().optional().nullable(),
 });
+
+export type CategoryCreateSchema = typeof categoryCreateSchema;
 
 export const categoryCreateFormLoad = async () => await superValidate(zod4(categoryCreateSchema));
 

@@ -1,10 +1,10 @@
 import { workspaceCreateFormLoad } from "#lib/components/workspace-create-schema.js";
-import workspace from "#lib/server/local/workspace/manager.js";
+import app from "#lib/server/local/app.js";
 
 import type { LayoutServerLoad } from "./$types";
 
 export const load: LayoutServerLoad = async () => {
-	const { workspaces, currentWorkspace } = workspace;
+	const { workspaces, currentWorkspace } = app;
 
 	const createWorkspaceForm = await workspaceCreateFormLoad();
 

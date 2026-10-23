@@ -1,7 +1,7 @@
 import { type Actions, fail } from "@sveltejs/kit";
 import { message } from "sveltekit-superforms";
 
-import workspace from "#lib/server/local/workspace/manager.js";
+import app from "#lib/server/local/app.js";
 
 import type { PageServerLoad } from "./$types";
 
@@ -15,7 +15,7 @@ import {
 export const load: PageServerLoad = async ({ depends }) => {
 	depends("data:categories");
 
-	const categories = workspace.service.category.getAllWithAccount();
+	const categories = app.service.category.getAllWithAccount();
 
 	console.log("account load", categories.length);
 
@@ -26,17 +26,15 @@ export const load: PageServerLoad = async ({ depends }) => {
 };
 
 export const actions: Actions = {
-	// createAccount: async ({request}) => {
-	// 	const form = await accountCreateFormAction(request);
-	//
-	// 	if (!form.valid) return fail(400, { form });
-	//
-	// 	const { name, code, is_debit } = form.data;
-	//
-	// 	workspace.service
-	//
-	// 	return message(form, "success");
-	// },
+	createAccount: async ({ request }) => {
+		const form = await accountCreateFormAction(request);
+
+		if (!form.valid) return fail(400, { form });
+
+		app.service.account.create(form.data);
+
+		return message(form, "success");
+	},
 	createCategory: async ({ request }) => {
 		const form = await categoryCreateFormAction(request);
 
@@ -44,7 +42,7 @@ export const actions: Actions = {
 
 		const { name, parent_id } = form.data;
 
-		const id = workspace.service.category.createCategory({ name, parent_id });
+		const id = app.service.category.createCategory({ name, parent_id });
 
 		return message(form, { id });
 	},
